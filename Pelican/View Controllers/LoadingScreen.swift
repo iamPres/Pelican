@@ -52,11 +52,20 @@ class LoadingScreen: UIViewController {
             }
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) { 
-        self.performSegue(withIdentifier: "segue1", sender: nil)
-        }
+        test()
     }
     
+    func test(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            if (self.titles.contains("")){
+                self.test()
+            }
+            else{
+                self.performSegue(withIdentifier: "segue1", sender: nil)
+            }
+        }
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! ArticleListScreen
         var imageData: [NSData] = []
