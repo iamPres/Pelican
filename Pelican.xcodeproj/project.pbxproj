@@ -38,6 +38,8 @@
 		8AAD25DC223753A3002747FB /* outside-page.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AAD25DB223753A3002747FB /* outside-page.png */; };
 		8AC54AB9223702FF00783160 /* menu-button-of-three-horizontal-lines.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC54AB8223702FF00783160 /* menu-button-of-three-horizontal-lines.png */; };
 		8AF0FD7F223756420066A7DA /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF0FD7E223756420066A7DA /* info.png */; };
+		8AF349A1223A1A490074334C /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF349A0223A1A490074334C /* LoadingScreen.swift */; };
+		8AF349A3223A2F8D0074334C /* CrossFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF349A2223A2F8D0074334C /* CrossFade.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,8 @@
 		8AAD25DB223753A3002747FB /* outside-page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outside-page.png"; sourceTree = "<group>"; };
 		8AC54AB8223702FF00783160 /* menu-button-of-three-horizontal-lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-button-of-three-horizontal-lines.png"; sourceTree = "<group>"; };
 		8AF0FD7E223756420066A7DA /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		8AF349A0223A1A490074334C /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
+		8AF349A2223A2F8D0074334C /* CrossFade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossFade.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +204,7 @@
 				8A632C4D2239C6EE00613978 /* PreviousIssue.swift */,
 				8A632C4F2239C6FA00613978 /* About.swift */,
 				8A632C512239C70B00613978 /* Bookmarks.swift */,
+				8AF349A0223A1A490074334C /* LoadingScreen.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 			children = (
 				8AAD25C522370DF6002747FB /* GoHome.swift */,
 				8AAD25C322370987002747FB /* ClickHeadline.swift */,
+				8AF349A2223A2F8D0074334C /* CrossFade.swift */,
 			);
 			path = Segues;
 			sourceTree = "<group>";
@@ -400,6 +406,7 @@
 				8A23F317223482E500DD26E0 /* ArticleCell.swift in Sources */,
 				8AAD25C622370DF6002747FB /* GoHome.swift in Sources */,
 				8A81F0522234EC3C00EC9466 /* ArticleViewController.swift in Sources */,
+				8AF349A3223A2F8D0074334C /* CrossFade.swift in Sources */,
 				8A23F30F2234814F00DD26E0 /* ArticleListScreen.swift in Sources */,
 				8A632C4C2239C6DE00613978 /* Settings.swift in Sources */,
 				8AAD25C8223711E3002747FB /* MenuViewController.swift in Sources */,
@@ -407,6 +414,7 @@
 				8A632C502239C6FA00613978 /* About.swift in Sources */,
 				8A81F05422359D3B00EC9466 /* ScrollView.swift in Sources */,
 				8A632C522239C70B00613978 /* Bookmarks.swift in Sources */,
+				8AF349A1223A1A490074334C /* LoadingScreen.swift in Sources */,
 				8A632C4E2239C6EE00613978 /* PreviousIssue.swift in Sources */,
 				8A26A6C922347025008528A4 /* AppDelegate.swift in Sources */,
 				8AAD25CA22371206002747FB /* MenuCell.swift in Sources */,

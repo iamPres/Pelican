@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JZ6-Fs-I2v">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JDf-cd-Wvg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -13,7 +13,7 @@
         <!--Article List Screen-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ArticleListScreen" customModule="Pelican" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArticleListScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ArticleListScreen" customModule="Pelican" customModuleProvider="target" sceneMemberID="viewController">
                     <stackView key="view" opaque="NO" contentMode="scaleToFill" axis="vertical" id="gWE-VY-tzd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -21,6 +21,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyM-Rc-Vky">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dej-XA-Ehp">
+                                        <rect key="frame" x="0.0" y="50" width="375" height="614"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <viewLayoutGuide key="safeArea" id="2ez-q4-lnE"/>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="The Pelican" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zgE-nJ-s1h">
                                         <rect key="frame" x="59" y="54" width="152" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -37,7 +43,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button" image="menu-button-of-three-horizontal-lines.png"/>
                                         <connections>
-                                            <segue destination="iKJ-Kl-Zck" kind="custom" customClass="ClickHeadline" customModule="Pelican" id="ssj-iN-lYY"/>
+                                            <segue destination="iKJ-Kl-Zck" kind="custom" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="yfr-MO-Ywj"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -101,15 +107,18 @@
                         <viewLayoutGuide key="safeArea" id="52r-PP-Q9T"/>
                     </stackView>
                     <navigationItem key="navigationItem" id="mgL-ZF-1PH"/>
+                    <connections>
+                        <segue destination="J4k-CO-vZs" kind="custom" identifier="segue2" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="x2G-14-8Xj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-490" y="167"/>
+            <point key="canvasLocation" x="-518" y="167"/>
         </scene>
-        <!--Article View Controller-->
+        <!--ArticleViewController-->
         <scene sceneID="9yn-iK-Urk">
             <objects>
-                <viewController storyboardIdentifier="ArticleViewController" id="J4k-CO-vZs" customClass="ArticleViewController" customModule="Pelican" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArticleViewController" title="ArticleViewController" id="J4k-CO-vZs" customClass="ArticleViewController" customModule="Pelican" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kGw-nn-gUi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -244,11 +253,11 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4aR-DT-lcN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="0Iy-IP-iUE">
                     <connections>
-                        <segue destination="JZ6-Fs-I2v" kind="custom" customClass="GoHome" customModule="Pelican" id="07r-Mk-XHs"/>
+                        <segue destination="JDf-cd-Wvg" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="buN-cD-FDZ"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2348" y="167"/>
+            <point key="canvasLocation" x="-1334" y="167"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="g8q-5U-UkP">
@@ -306,12 +315,12 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Of Article" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAN-Xa-5Su">
-                                                    <rect key="frame" x="107" y="12" width="249" height="65"/>
+                                                    <rect key="frame" x="100" y="12" width="263" height="65"/>
                                                     <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:caR-Al-lkH:image" translatesAutoresizingMaskIntoConstraints="NO" id="caR-Al-lkH">
-                                                    <rect key="frame" x="15" y="12" width="72" height="65"/>
+                                                    <rect key="frame" x="8" y="12" width="72" height="65"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="72" id="IdD-na-kmY"/>
                                                         <constraint firstAttribute="height" constant="65" id="OQQ-F6-9TB"/>
@@ -359,7 +368,7 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a43-66-FBp" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="KLL-E4-vxu">
                     <connections>
-                        <segue destination="JZ6-Fs-I2v" kind="custom" customClass="GoHome" customModule="Pelican" id="6pq-rr-OZy"/>
+                        <segue destination="JDf-cd-Wvg" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="j1s-t8-IGA"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -416,24 +425,6 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="336.80000000000001" y="-728.18590704647681"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="cRR-94-tkQ">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JZ6-Fs-I2v" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DWv-lE-qnB">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="U3k-rP-K5t"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bJX-k2-1fE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1409" y="167"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PpU-7a-tpq">
@@ -666,6 +657,69 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-2511.1999999999998" y="-728.18590704647681"/>
+        </scene>
+        <!--Loading Screen-->
+        <scene sceneID="4o0-wn-Wib">
+            <objects>
+                <viewController storyboardIdentifier="LoadingScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JDf-cd-Wvg" customClass="LoadingScreen" customModule="Pelican" customModuleProvider="target" sceneMemberID="viewController">
+                    <stackView key="view" opaque="NO" contentMode="scaleToFill" axis="vertical" id="9I7-8l-KJp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gLX-PH-q6J">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5cg-eM-pQc">
+                                        <rect key="frame" x="0.0" y="50" width="375" height="614"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <viewLayoutGuide key="safeArea" id="NeM-mD-GJJ"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="The Pelican" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sJ-Ca-wwa">
+                                        <rect key="frame" x="59" y="54" width="152" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="27"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="LOGO.png" translatesAutoresizingMaskIntoConstraints="NO" id="b8s-ZQ-q3X">
+                                        <rect key="frame" x="21" y="54" width="30" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bmb-DC-gR2">
+                                        <rect key="frame" x="309" y="57" width="25" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button" image="menu-button-of-three-horizontal-lines.png"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Ocs-Uz-kx7"/>
+                                    <constraint firstAttribute="width" constant="375" id="a4m-dk-j05"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3e-xy-7xf">
+                                <rect key="frame" x="0.0" y="100" width="375" height="567"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="102-oe-pDY">
+                                        <rect key="frame" x="169" y="211" width="37" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2sl-nZ-JJV"/>
+                    </stackView>
+                    <navigationItem key="navigationItem" id="aqp-bk-RWk"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="custom" identifier="segue1" customClass="CrossFade" customModule="Pelican" customModuleProvider="target" id="DRg-Mn-NHB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OxF-QL-aOC" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2180" y="167"/>
         </scene>
     </scenes>
     <resources>
@@ -18258,8 +18312,8 @@ DgAQBRMAEAUbABAWhwAQFokAEBaOABAWnAAQFqAAEBanABAWrAAQFrkAEBa8ABAWyQAQFs4AEBbWABAW
         <image name="menu-button-of-three-horizontal-lines.png" width="480" height="480"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zx3-zY-Jgc"/>
-        <segue reference="07r-Mk-XHs"/>
+        <segue reference="buN-cD-FDZ"/>
+        <segue reference="yfr-MO-Ywj"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

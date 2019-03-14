@@ -14,8 +14,8 @@ class ArticleListScreen: UIViewController {
     
     var index: Int = 0
     @IBOutlet weak var label: UILabel!
-    var titles: [String] = ["","","","","",""]
-    var images: [UIImage] = [#imageLiteral(resourceName: "polititian.jpg"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "outside-page.png")]
+    var titles: [String] = []
+    var images: [UIImage] = []
     var loaded: Int = 0
     let url: [URL] = [URL(string: "https://www.businessinsider.com/amazon-web-services-open-source-elasticsearch-2019-3")!,
                       URL(string: "https://www.businessinsider.com/zero-electric-motorcycle-brings-connectivity-race-for-e-bikes-2019-3")!,
@@ -27,6 +27,14 @@ class ArticleListScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        NSLog("HI")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination.title == "ArticleViewController" {
+            let vc = segue.destination as! ArticleViewController
+            vc.url = url[index]
+    }
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
@@ -67,38 +75,17 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
         }
         if loaded < url.count {
             loaded += 1
-            parseHTML(index: indexPath.row) { result in
-                var attribute: String = ""
-                do{
-                    let doc: Document = try SwiftSoup.parse(result)
-                    try attribute = doc.getElementsByClass("post-headline ").text()
-                    NSLog("NEW SHIT: "+attribute)
-                }catch{
-                    NSLog("None")
-                }
-                self.titles[indexPath.row] = attribute
-            cell.titleLabel.text = self.titles[indexPath.row]
-                do{
-                    let doc: Document = try SwiftSoup.parse(result)
-                    try attribute = doc.getElementsByTag("img").attr("src")
-                    NSLog(attribute)
-                }catch{
-                    NSLog("None")
-                }
-                self.getData(from: URL.init(string: attribute)!) { data, response, error  in
-                    cell.thumbnail.contentMode = .scaleAspectFit
-                    cell.thumbnail.image = UIImage(data: data!)
-                }
-            }
+        cell.thumbnail.contentMode = .scaleAspectFit
+        cell.thumbnail.image = images[indexPath.row]
+        cell.titleLabel.text = titles[indexPath.row]
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ArticleViewController") as? ArticleViewController
-        vc?.url = url[indexPath.row]
-        self.navigationController?.pushViewController(vc!, animated: true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        NSLog("SELECTED"+String(indexPath.row))
+        index = indexPath.row
+        self.performSegue(withIdentifier: "segue2", sender: nil)
     }
 }
 
