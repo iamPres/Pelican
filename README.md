@@ -1,7 +1,8 @@
 # Pelican
 Pelican Newspaper App
 
-# Show and tell..
-![alt text](https://imgur.com/nIGlfL9)
+# Homescreen
+![Imgur](https://i.imgur.com/nIGlfL9.png)
 
-![alt text](https://imgur.com/cgYTKOw)
+# Article Template
+![Imgur](https://i.imgur.com/cgYTKOw.png)
