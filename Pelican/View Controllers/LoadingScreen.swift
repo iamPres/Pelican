@@ -22,6 +22,11 @@ class LoadingScreen: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ArticleListScreen") as? ArticleListScreen
         
+        for _ in 0..<((vc?.url.count)!) {
+            images.append(UIImage.init())
+            titles.append("")
+        }
+        
         for i in 0..<((vc?.url.count)!) {
             vc?.parseHTML(index: i) { result in
                 var attribute: String = ""
@@ -32,7 +37,7 @@ class LoadingScreen: UIViewController {
                 }catch{
                     NSLog("None")
                 }
-                self.titles.append(attribute)
+                self.titles[i] = attribute
                 
                 do{
                     let doc: Document = try SwiftSoup.parse(result)
@@ -42,7 +47,7 @@ class LoadingScreen: UIViewController {
                     NSLog("None")
                 }
                 vc?.getData(from: URL.init(string: attribute)!) { data, response, error  in
-                    self.images.append(UIImage(data: data!)!)
+                    self.images[i] = (UIImage(data: data!)!)
                }
             }
         }
