@@ -27,6 +27,8 @@ class LoadingScreen: UIViewController {
             titles.append("")
         }
         
+        let group = DispatchGroup()
+        
         for i in 0..<((vc?.url.count)!) {
             vc?.parseHTML(index: i) { result in
                 var attribute: String = ""
@@ -51,10 +53,7 @@ class LoadingScreen: UIViewController {
                }
             }
         }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) { 
-        self.performSegue(withIdentifier: "segue1", sender: nil)
-        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

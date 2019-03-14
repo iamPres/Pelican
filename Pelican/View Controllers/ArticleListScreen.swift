@@ -86,7 +86,7 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        NSLog("SELECTED"+String(indexPath.row))
+        NSLog("SELECTED: "+String(indexPath.row))
         index = indexPath.row
         self.performSegue(withIdentifier: "segue2", sender: nil)
     }
