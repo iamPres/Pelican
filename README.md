@@ -1,5 +1,5 @@
 # Pelican
-Pelican Newspaper App
+Pelican Newspaper App - uses scraper to fetch content from the web
 
 # Homescreen
 ![Imgur](https://i.imgur.com/nIGlfL9.png)
