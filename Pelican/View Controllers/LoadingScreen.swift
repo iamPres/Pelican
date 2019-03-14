@@ -14,6 +14,7 @@ class LoadingScreen: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserDefaults.standard.set(false, forKey: "nightmode")
     }
     
     var images: [UIImage] = []

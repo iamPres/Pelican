@@ -12,10 +12,12 @@ import UIKit
 class MenuViewController: UIViewController {
     let titles: [String] = ["Previous Issues", "Bookmarks", "Settings", "Website", "About"]
     let images: [UIImage] = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")]
+    @IBOutlet weak var pelican: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        SettingsTableViewController().changeColor(target: self, labels: [pelican])
     }
 }
 
@@ -30,8 +32,18 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell") as! MenuCell
         cell.imageView!.image = images[indexPath.row]
         cell.label.text = titles[indexPath.row]
-        return cell
-    }
+        if UserDefaults.standard.object(forKey: "nightmode") as! Bool{
+            cell.backgroundColor = SettingsTableViewController().darkBackground
+            cell.label.textColor = SettingsTableViewController().lightColor
+            tableView.separatorColor = UIColor.darkGray
+        }
+        else {
+            cell.backgroundColor = SettingsTableViewController().lightColor
+            cell.label.textColor = SettingsTableViewController().darkColor
+            tableView.separatorColor = UIColor.darkText
+        }
+            return cell
+        }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 3{

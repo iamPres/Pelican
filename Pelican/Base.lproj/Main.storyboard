@@ -18,10 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyM-Rc-Vky">
+                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyM-Rc-Vky">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dej-XA-Ehp">
+                                    <view tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dej-XA-Ehp">
                                         <rect key="frame" x="0.0" y="50" width="375" height="614"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -43,7 +43,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button" image="menu-button-of-three-horizontal-lines.png"/>
                                         <connections>
-                                            <segue destination="iKJ-Kl-Zck" kind="custom" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="yfr-MO-Ywj"/>
+                                            <segue destination="rVR-bu-pyW" kind="custom" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="hqV-mR-uco"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -108,6 +108,7 @@
                     </stackView>
                     <navigationItem key="navigationItem" id="mgL-ZF-1PH"/>
                     <connections>
+                        <outlet property="label" destination="zgE-nJ-s1h" id="M99-9a-RxC"/>
                         <segue destination="J4k-CO-vZs" kind="custom" identifier="segue2" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="x2G-14-8Xj"/>
                     </connections>
                 </viewController>
@@ -364,33 +365,18 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                         </connections>
                     </stackView>
                     <navigationItem key="navigationItem" id="GHe-8A-iNy"/>
+                    <connections>
+                        <outlet property="pelican" destination="XhJ-Vs-EXG" id="RhT-JX-XOK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a43-66-FBp" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="KLL-E4-vxu">
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="itb-HR-672"/>
+                        <segue destination="BYZ-38-t0r" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="9iS-Xt-vwq"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2140" y="166.8665667166417"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="PpU-7a-tpq">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iKJ-Kl-Zck" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EZh-Gs-UpA">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="rVR-bu-pyW" kind="relationship" relationship="rootViewController" id="LNb-Sy-icC"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BnL-RA-pe3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1328.8" y="166.8665667166417"/>
+            <point key="canvasLocation" x="1503" y="167"/>
         </scene>
         <!--Previous Issue-->
         <scene sceneID="CMA-m8-s7Y">
@@ -438,7 +424,7 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W48-gW-p8v" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="zfs-Qn-IJG">
                     <connections>
-                        <segue destination="iKJ-Kl-Zck" kind="custom" customClass="GoHome" customModule="Pelican" id="R3E-RU-qNk"/>
+                        <segue destination="rVR-bu-pyW" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="tLr-e2-xMV"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -447,12 +433,12 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
         <!--Settings-->
         <scene sceneID="VGG-m2-Us2">
             <objects>
-                <tableViewController storyboardIdentifier="Settings" title="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ngc-f8-fDs" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="naY-3Z-dJ7">
+                <tableViewController storyboardIdentifier="Settings" title="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ngc-f8-fDs" customClass="SettingsTableViewController" customModule="Pelican" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="naY-3Z-dJ7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="Ast-UT-chx">
+                        <view key="tableHeaderView" tag="1" contentMode="scaleToFill" restorationIdentifier="View1" id="Ast-UT-chx">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="67"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -474,13 +460,13 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                                 <constraint firstAttribute="height" constant="100" id="qhm-Na-fUm"/>
                             </constraints>
                         </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="jk1-65-zHC">
-                            <rect key="frame" x="0.0" y="157" width="375" height="489"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="xM3-Uw-Tc3">
+                            <rect key="frame" x="0.0" y="157" width="375" height="495"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <gestureRecognizers/>
                             <connections>
-                                <outletCollection property="gestureRecognizers" destination="MGN-0S-Iyo" appends="YES" id="k1F-8H-bPI"/>
+                                <outletCollection property="gestureRecognizers" destination="MGN-0S-Iyo" appends="YES" id="S0g-yg-ALt"/>
                             </connections>
                         </view>
                         <sections>
@@ -495,6 +481,9 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="GUr-DG-osD">
                                                     <rect key="frame" x="260" y="23" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="nightmode:" destination="Ngc-f8-fDs" eventType="valueChanged" id="emF-7Q-xvI"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Night Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NAf-IM-vsy">
                                                     <rect key="frame" x="66" y="26" width="109" height="23"/>
@@ -519,11 +508,16 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                             <outlet property="delegate" destination="Ngc-f8-fDs" id="Y4V-bk-meG"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="nightModeLabel" destination="NAf-IM-vsy" id="CPc-LX-HNW"/>
+                        <outlet property="nightmode_outlet" destination="GUr-DG-osD" id="3Yk-nH-81N"/>
+                        <outlet property="pelicanLabel" destination="5PQ-tQ-Lb2" id="SdL-KY-Ql7"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IYk-44-sC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="MGN-0S-Iyo">
                     <connections>
-                        <segue destination="iKJ-Kl-Zck" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="cNk-KT-0cg"/>
+                        <segue destination="rVR-bu-pyW" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="ayL-76-ciu"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -575,7 +569,7 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zK5-14-Pfz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="oGY-NR-r7e">
                     <connections>
-                        <segue destination="iKJ-Kl-Zck" kind="custom" customClass="GoHome" customModule="Pelican" id="zx3-zY-Jgc"/>
+                        <segue destination="rVR-bu-pyW" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="8qT-Xe-I8g"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -685,7 +679,7 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aDv-GQ-vCx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="Ery-7Y-Ko0">
                     <connections>
-                        <segue destination="iKJ-Kl-Zck" kind="custom" customClass="GoHome" customModule="Pelican" id="WWg-YQ-Bin"/>
+                        <segue destination="rVR-bu-pyW" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="HI3-dk-aj4"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -18345,8 +18339,8 @@ DgAQBRMAEAUbABAWhwAQFokAEBaOABAWnAAQFqAAEBanABAWrAAQFrkAEBa8ABAWyQAQFs4AEBbWABAW
         <image name="menu-button-of-three-horizontal-lines.png" width="480" height="480"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cNk-KT-0cg"/>
-        <segue reference="itb-HR-672"/>
+        <segue reference="HI3-dk-aj4"/>
+        <segue reference="9iS-Xt-vwq"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

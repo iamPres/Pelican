@@ -12,8 +12,8 @@ import Alamofire
 
 class ArticleListScreen: UIViewController {
     
-    var index: Int = 0
     @IBOutlet weak var label: UILabel!
+    var index: Int = 0
     var titles: [String] = []
     var images: [UIImage] = []
     var loaded: Int = 0
@@ -26,8 +26,13 @@ class ArticleListScreen: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if SettingsTableViewController().changeColor(target: self, labels: [label]) {
+            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
+        }
+        else {
+             self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().lightColor
+        }
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        NSLog("HI")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -76,11 +81,16 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
         if loaded < url.count {
             loaded += 1
         cell.thumbnail.contentMode = .scaleAspectFit
-            do {
-                try cell.thumbnail.image = UIImage(data: (UserDefaults.standard.array(forKey: "images")![indexPath.row] as! NSData) as Data)
-                try cell.titleLabel.text = UserDefaults.standard.array(forKey: "titles")![indexPath.row] as! String
-            } catch {
-            }
+        cell.thumbnail.image = UIImage(data: (UserDefaults.standard.array(forKey: "images")![indexPath.row] as! NSData) as Data)
+        cell.titleLabel.text = UserDefaults.standard.array(forKey: "titles")![indexPath.row] as? String
+        }
+        if SettingsTableViewController().changeColor(target: self, labels: [cell.titleLabel]) {
+        cell.backgroundColor = SettingsTableViewController().darkBackground
+        tableView.separatorColor = UIColor.darkGray
+        }
+        else {
+        cell.backgroundColor = SettingsTableViewController().lightColor
+        tableView.separatorColor = UIColor.lightGray
         }
         return cell
     }
