@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:bookmark-outline.png">
+   </FileRef>
+   <FileRef
+      location = "group:corporate.png">
+   </FileRef>
+   <FileRef
+      location = "group:info.png">
+   </FileRef>
+   <FileRef
+      location = "group:newspaper.png">
+   </FileRef>
+   <FileRef
+      location = "group:outside-page.png">
+   </FileRef>
+   <FileRef
+      location = "group:settings.png">
+   </FileRef>
+   <FileRef
+      location = "self:Pelican.xcodeproj">
+   </FileRef>
+</Workspace>
