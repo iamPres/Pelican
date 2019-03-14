@@ -56,7 +56,7 @@ class LoadingScreen: UIViewController {
     }
     
     func test(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if (self.titles.contains("")){
                 self.test()
             }
@@ -69,8 +69,8 @@ class LoadingScreen: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! ArticleListScreen
         var imageData: [NSData] = []
-        for i in self.images {
-            imageData.append(i.pngData()! as NSData)
+        for i in 0..<(images.count) {
+            imageData.append(images[i].pngData()! as NSData)
         }
         UserDefaults.standard.set(imageData, forKey: "images")
         UserDefaults.standard.set(self.titles, forKey: "titles")
