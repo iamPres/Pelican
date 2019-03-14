@@ -366,7 +366,11 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                     <navigationItem key="navigationItem" id="GHe-8A-iNy"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a43-66-FBp" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="KLL-E4-vxu"/>
+                <swipeGestureRecognizer direction="right" id="KLL-E4-vxu">
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="itb-HR-672"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2140" y="166.8665667166417"/>
         </scene>
@@ -470,6 +474,15 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                                 <constraint firstAttribute="height" constant="100" id="qhm-Na-fUm"/>
                             </constraints>
                         </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="jk1-65-zHC">
+                            <rect key="frame" x="0.0" y="157" width="375" height="489"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="MGN-0S-Iyo" appends="YES" id="k1F-8H-bPI"/>
+                            </connections>
+                        </view>
                         <sections>
                             <tableViewSection id="xJQ-NF-ih1">
                                 <cells>
@@ -508,9 +521,9 @@ Vivamus tempus congue ante, sit amet pulvinar tortor feugiat eget. Morbi tortor 
                     </tableView>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IYk-44-sC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="Mqr-xV-h8z">
+                <swipeGestureRecognizer direction="right" id="MGN-0S-Iyo">
                     <connections>
-                        <segue destination="iKJ-Kl-Zck" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="aMy-2F-od0"/>
+                        <segue destination="iKJ-Kl-Zck" kind="custom" customClass="GoHome" customModule="Pelican" customModuleProvider="target" id="cNk-KT-0cg"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -18332,8 +18345,8 @@ DgAQBRMAEAUbABAWhwAQFokAEBaOABAWnAAQFqAAEBanABAWrAAQFrkAEBa8ABAWyQAQFs4AEBbWABAW
         <image name="menu-button-of-three-horizontal-lines.png" width="480" height="480"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aMy-2F-od0"/>
-        <segue reference="F6O-P7-ytK"/>
+        <segue reference="cNk-KT-0cg"/>
+        <segue reference="itb-HR-672"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
