@@ -28,3 +28,18 @@ class Settings: UIViewController {
     */
 
 }
+
+extension Settings: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        tableView.rowHeight = 90
+        tableView.separatorStyle = .singleLine
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell") as! SettingsCell
+        
+        return cell
+    }
+}
+

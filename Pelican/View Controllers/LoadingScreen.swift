@@ -47,15 +47,20 @@ class LoadingScreen: UIViewController {
             }
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { // Change `2.0` to the desired number of seconds.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) { 
         self.performSegue(withIdentifier: "segue1", sender: nil)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! ArticleListScreen
-        vc.images = self.images
-        vc.titles = self.titles
+        var imageData: [NSData] = []
+        for i in self.images {
+            imageData.append(i.pngData()! as NSData)
+        }
+        UserDefaults.standard.set(imageData, forKey: "images")
+        UserDefaults.standard.set(self.titles, forKey: "titles")
+        UserDefaults.standard.synchronize()
     }
 
 }

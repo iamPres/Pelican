@@ -37,10 +37,7 @@ class ArticleViewController: UIViewController {
                 self.image.contentMode = .scaleAspectFit
                 self.image.image = UIImage(data: data!)
             }
-        }
-        
-        parseHTML() { result in
-            var attribute: String = ""
+
             do{
                 let doc: Document = try SwiftSoup.parse(result)
                 try attribute = doc.getElementsByClass("post-headline ").text()
@@ -49,10 +46,7 @@ class ArticleViewController: UIViewController {
                 NSLog("None")
             }
             self.headline.text = attribute
-        }
-        
-        parseHTML() { result in
-            var attribute: String = ""
+
             do{
                 let doc: Document = try SwiftSoup.parse(result)
                 try attribute = doc.getElementsByClass("post-content typography ").text()
@@ -66,10 +60,7 @@ class ArticleViewController: UIViewController {
             self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.article.frame.size.height+self.headline.frame.size.height+200))
             
             self.scrollView.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:self.article.frame.size.height+self.headline.frame.size.height+self.image.frame.height+200))
-        }
-        
-        parseHTML() { result in
-            var attribute: String = ""
+
             do{
                 let doc: Document = try SwiftSoup.parse(result)
                 try attribute = doc.getElementsByClass("byline-timestamp").text()
@@ -78,10 +69,7 @@ class ArticleViewController: UIViewController {
                 NSLog("None")
             }
             self.date.text = attribute
-        }
-        
-        parseHTML() { result in
-            var attribute: String = ""
+
             do{
                 let doc: Document = try SwiftSoup.parse(result)
                 try attribute = doc.getElementsByClass("byline-link byline-author-name").text()

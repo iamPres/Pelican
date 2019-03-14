@@ -34,7 +34,7 @@ class ArticleListScreen: UIViewController {
         if segue.destination.title == "ArticleViewController" {
             let vc = segue.destination as! ArticleViewController
             vc.url = url[index]
-    }
+        }
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
@@ -76,8 +76,11 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
         if loaded < url.count {
             loaded += 1
         cell.thumbnail.contentMode = .scaleAspectFit
-        cell.thumbnail.image = images[indexPath.row]
-        cell.titleLabel.text = titles[indexPath.row]
+            do {
+                try cell.thumbnail.image = UIImage(data: (UserDefaults.standard.array(forKey: "images")![indexPath.row] as! NSData) as Data)
+                try cell.titleLabel.text = UserDefaults.standard.array(forKey: "titles")![indexPath.row] as! String
+            } catch {
+            }
         }
         return cell
     }
