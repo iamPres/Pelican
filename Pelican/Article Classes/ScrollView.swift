@@ -15,6 +15,6 @@ class ScrollView: UIScrollView {
     override func awakeFromNib() {
         super.awakeFromNib()
         let myScrollView = self
-        myScrollView.contentSize = CGSize(width: 375, height: 3000)
+        myScrollView.contentSize = CGSize(width: UIScreen.main.fixedCoordinateSpace.bounds.width, height: 3000)
     }
 }

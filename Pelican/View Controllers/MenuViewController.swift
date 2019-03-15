@@ -11,7 +11,7 @@ import UIKit
 
 class MenuViewController: UIViewController {
     let titles: [String] = ["Previous Issues", "Bookmarks", "Settings", "Website", "About"]
-    let images: [UIImage] = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")]
+    var images: [UIImage] = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")]
     @IBOutlet weak var pelican: UILabel!
     
     override func viewDidLoad() {
@@ -30,18 +30,20 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.rowHeight = 90
         tableView.separatorStyle = .singleLine
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell") as! MenuCell
-        cell.imageView!.image = images[indexPath.row]
         cell.label.text = titles[indexPath.row]
         if UserDefaults.standard.object(forKey: "nightmode") as! Bool{
             cell.backgroundColor = SettingsTableViewController().darkBackground
             cell.label.textColor = SettingsTableViewController().lightColor
             tableView.separatorColor = UIColor.darkGray
+            images = [#imageLiteral(resourceName: "newspaper-white.png"),#imageLiteral(resourceName: "bookmark-outline-white.png"),#imageLiteral(resourceName: "settings-white.png"),#imageLiteral(resourceName: "outside-page-white.png"),#imageLiteral(resourceName: "info-white.png")]
         }
         else {
             cell.backgroundColor = SettingsTableViewController().lightColor
             cell.label.textColor = SettingsTableViewController().darkColor
+            images = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")]
             tableView.separatorColor = UIColor.darkText
         }
+            cell.imageView!.image = images[indexPath.row]
             return cell
         }
     

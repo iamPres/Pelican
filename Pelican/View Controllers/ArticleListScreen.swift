@@ -11,8 +11,9 @@ import SwiftSoup
 import Alamofire
 
 class ArticleListScreen: UIViewController {
-    
+    @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var label: UILabel!
+    
     var index: Int = 0
     var titles: [String] = []
     var images: [UIImage] = []
@@ -28,9 +29,11 @@ class ArticleListScreen: UIViewController {
         super.viewDidLoad()
         if SettingsTableViewController().changeColor(target: self, labels: [label]) {
             self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
+                menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines-white.png"), for: UIControl.State.normal)
         }
         else {
              self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().lightColor
+                menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines.png"), for: UIControl.State.normal)
         }
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }

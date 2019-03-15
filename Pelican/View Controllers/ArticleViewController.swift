@@ -23,7 +23,7 @@ class ArticleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if UserDefaults.standard.object(forKey: "nightmode") as! Bool {
+        if SettingsTableViewController().changeColor(target: self, labels: [article, headline, date, author]) {
             frame.backgroundColor = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
         }
         else {

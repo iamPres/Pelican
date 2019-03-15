@@ -40,6 +40,13 @@
 		8AF349A1223A1A490074334C /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF349A0223A1A490074334C /* LoadingScreen.swift */; };
 		8AF349A3223A2F8D0074334C /* CrossFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF349A2223A2F8D0074334C /* CrossFade.swift */; };
 		8AF349A7223AEEB60074334C /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF349A6223AEEB50074334C /* SettingsTableViewController.swift */; };
+		8AF349AE223B2D7F0074334C /* menu-button-of-three-horizontal-lines-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF349A8223B2D7E0074334C /* menu-button-of-three-horizontal-lines-white.png */; };
+		8AF349AF223B2D7F0074334C /* info-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF349A9223B2D7F0074334C /* info-white.png */; };
+		8AF349B0223B2D7F0074334C /* outside-page-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF349AA223B2D7F0074334C /* outside-page-white.png */; };
+		8AF349B1223B2D7F0074334C /* settings-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF349AB223B2D7F0074334C /* settings-white.png */; };
+		8AF349B2223B2D7F0074334C /* bookmark-outline-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF349AC223B2D7F0074334C /* bookmark-outline-white.png */; };
+		8AF349B3223B2D7F0074334C /* newspaper-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF349AD223B2D7F0074334C /* newspaper-white.png */; };
+		8AF349B5223B2F4C0074334C /* logo-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF349B4223B2F4B0074334C /* logo-dark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +99,13 @@
 		8AF349A0223A1A490074334C /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		8AF349A2223A2F8D0074334C /* CrossFade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossFade.swift; sourceTree = "<group>"; };
 		8AF349A6223AEEB50074334C /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		8AF349A8223B2D7E0074334C /* menu-button-of-three-horizontal-lines-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu-button-of-three-horizontal-lines-white.png"; path = "Pelican/Images/menu-button-of-three-horizontal-lines-white.png"; sourceTree = SOURCE_ROOT; };
+		8AF349A9223B2D7F0074334C /* info-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "info-white.png"; path = "Pelican/Images/info-white.png"; sourceTree = SOURCE_ROOT; };
+		8AF349AA223B2D7F0074334C /* outside-page-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "outside-page-white.png"; path = "Pelican/Images/outside-page-white.png"; sourceTree = SOURCE_ROOT; };
+		8AF349AB223B2D7F0074334C /* settings-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-white.png"; path = "Pelican/Images/settings-white.png"; sourceTree = SOURCE_ROOT; };
+		8AF349AC223B2D7F0074334C /* bookmark-outline-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bookmark-outline-white.png"; path = "Pelican/Images/bookmark-outline-white.png"; sourceTree = SOURCE_ROOT; };
+		8AF349AD223B2D7F0074334C /* newspaper-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newspaper-white.png"; path = "Pelican/Images/newspaper-white.png"; sourceTree = SOURCE_ROOT; };
+		8AF349B4223B2F4B0074334C /* logo-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo-dark.png"; path = "Pelican/Images/logo-dark.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,8 +194,15 @@
 			isa = PBXGroup;
 			children = (
 				8AAD25D722375393002747FB /* corporate.png */,
+				8AF349B4223B2F4B0074334C /* logo-dark.png */,
 				8AAD25DB223753A3002747FB /* outside-page.png */,
+				8AF349AA223B2D7F0074334C /* outside-page-white.png */,
+				8AF349A9223B2D7F0074334C /* info-white.png */,
+				8AF349AD223B2D7F0074334C /* newspaper-white.png */,
+				8AF349AC223B2D7F0074334C /* bookmark-outline-white.png */,
 				8AAD25D52237537B002747FB /* settings.png */,
+				8AF349AB223B2D7F0074334C /* settings-white.png */,
+				8AF349A8223B2D7E0074334C /* menu-button-of-three-horizontal-lines-white.png */,
 				8AAD25D322375361002747FB /* newspaper.png */,
 				8AAD25CF22375355002747FB /* bookmark-outline.png */,
 				8AAD25CD22372EDA002747FB /* issue.png */,
@@ -321,10 +342,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AF349B0223B2D7F0074334C /* outside-page-white.png in Resources */,
+				8AF349B5223B2F4C0074334C /* logo-dark.png in Resources */,
 				8AAD25D62237537B002747FB /* settings.png in Resources */,
 				8AAD25D022375355002747FB /* bookmark-outline.png in Resources */,
 				8AAD25DC223753A3002747FB /* outside-page.png in Resources */,
 				8AC54AB9223702FF00783160 /* menu-button-of-three-horizontal-lines.png in Resources */,
+				8AF349B2223B2D7F0074334C /* bookmark-outline-white.png in Resources */,
 				8A81F0502234CD1800EC9466 /* sps.jpg in Resources */,
 				8A26A6E9223470E1008528A4 /* LOGO.png in Resources */,
 				8A26A6D322347026008528A4 /* LaunchScreen.storyboard in Resources */,
@@ -332,8 +356,12 @@
 				8AAD25D822375393002747FB /* corporate.png in Resources */,
 				8A81F0482234969100EC9466 /* polititian.jpg in Resources */,
 				8AF0FD7F223756420066A7DA /* info.png in Resources */,
+				8AF349B3223B2D7F0074334C /* newspaper-white.png in Resources */,
+				8AF349AF223B2D7F0074334C /* info-white.png in Resources */,
 				8AAD25D422375361002747FB /* newspaper.png in Resources */,
 				8A26A6CE22347025008528A4 /* Main.storyboard in Resources */,
+				8AF349AE223B2D7F0074334C /* menu-button-of-three-horizontal-lines-white.png in Resources */,
+				8AF349B1223B2D7F0074334C /* settings-white.png in Resources */,
 				8AAD25CE22372EDA002747FB /* issue.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
