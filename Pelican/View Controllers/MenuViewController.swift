@@ -28,7 +28,14 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
     
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         tableView.rowHeight = 90
+    
+        if indexPath.row == 4 {
+            tableView.separatorStyle = .none
+        }
+        else {
         tableView.separatorStyle = .singleLine
+        }
+    
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell") as! MenuCell
         cell.label.text = titles[indexPath.row]
         if UserDefaults.standard.object(forKey: "nightmode") as! Bool{
@@ -41,7 +48,7 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
             cell.backgroundColor = SettingsTableViewController().lightColor
             cell.label.textColor = SettingsTableViewController().darkColor
             images = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")]
-            tableView.separatorColor = UIColor.darkText
+            tableView.separatorColor = UIColor.lightGray
         }
             cell.imageView!.image = images[indexPath.row]
             return cell

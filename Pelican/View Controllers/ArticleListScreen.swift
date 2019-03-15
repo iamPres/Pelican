@@ -75,8 +75,8 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
             tableView.separatorStyle = .singleLine
             //cell.titleLabel.addConstraint(NSLayoutConstraint(item: cell.titleLabel, attribute: .bottom, relatedBy: .equal, toItem: cell, attribute: .bottom, multiplier: 1, constant: 0))
         }
-        else if (indexPath.row == 1){
-            tableView.rowHeight = 90
+        else if (indexPath.row == 5){
+            tableView.separatorStyle = .none
         }
         else{
             tableView.rowHeight = 90
