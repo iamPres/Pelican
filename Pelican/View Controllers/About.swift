@@ -9,22 +9,17 @@
 import UIKit
 
 class About: UIViewController {
-
+    @IBOutlet weak var author: UILabel!
+    @IBOutlet weak var authorname: UILabel!
+    @IBOutlet weak var date: UILabel!
+    @IBOutlet weak var inquiries: UILabel!
+    @IBOutlet weak var email: UILabel!
+    @IBOutlet weak var pelican: UILabel!
+    @IBOutlet weak var dateofpublication: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        SettingsTableViewController().changeColor(target: self, labels: [author,authorname,dateofpublication,date,inquiries,email,pelican])
+ 
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

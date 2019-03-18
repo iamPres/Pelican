@@ -61,7 +61,15 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
         else {
         let newViewController = storyboard!.instantiateViewController(withIdentifier: titles[indexPath.row])
         newViewController.navigationController?.setNavigationBarHidden(true, animated: true)
-        self.present(newViewController, animated: true, completion: nil)
+            let containerView = self.view.superview
+            
+            newViewController.view.transform = CGAffineTransform(translationX: 500, y: 0)
+            containerView?.addSubview(newViewController.view)
+            UIView.animate(withDuration: 0.5, delay:0, options: .curveEaseInOut, animations: {
+                newViewController.view.transform = CGAffineTransform.identity
+            }, completion: {
+                success in self.present(newViewController, animated: false, completion: nil)
+            })
         }
     }
 }

@@ -277,7 +277,6 @@
                                 </constraints>
                                 <color key="separatorColor" white="0.84999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="bottomLeft" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuCell" rowHeight="90" id="LcT-6A-rKy" customClass="MenuCell" customModule="Pelican" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
@@ -391,6 +390,9 @@
                             <outletCollection property="gestureRecognizers" destination="zfs-Qn-IJG" appends="YES" id="mQ4-kz-O0z"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="pelican" destination="IOP-fq-XZN" id="PWF-oI-hNH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W48-gW-p8v" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="zfs-Qn-IJG">
@@ -537,6 +539,9 @@
                             <outletCollection property="gestureRecognizers" destination="oGY-NR-r7e" appends="YES" id="NhK-a5-sWZ"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="pelican" destination="Upr-Dd-UIu" id="FeQ-GC-gzc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zK5-14-Pfz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="oGY-NR-r7e">
@@ -622,20 +627,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rate this Application" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SnE-qE-wjk">
-                                        <rect key="frame" x="20" y="263" width="188" height="42"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 2 3 4 5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKV-wN-q9h">
-                                        <rect key="frame" x="20" y="303" width="216" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -647,6 +638,15 @@
                             <outletCollection property="gestureRecognizers" destination="Ery-7Y-Ko0" appends="YES" id="fCr-CC-giM"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="author" destination="2oZ-kv-bZl" id="YHS-T9-M34"/>
+                        <outlet property="authorname" destination="H8S-qZ-eoz" id="tRO-XY-nmY"/>
+                        <outlet property="date" destination="Dhv-mj-tyr" id="RAN-jS-uV0"/>
+                        <outlet property="dateofpublication" destination="GXf-4Q-c6M" id="fAN-Bn-OUL"/>
+                        <outlet property="email" destination="mWP-i8-KPY" id="vIb-LC-DMS"/>
+                        <outlet property="inquiries" destination="fa2-qY-ydW" id="wMZ-z8-Ukm"/>
+                        <outlet property="pelican" destination="bhd-JI-0vo" id="fkx-Qz-jZ4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aDv-GQ-vCx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="Ery-7Y-Ko0">
