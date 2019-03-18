@@ -11,7 +11,7 @@
 		8A23F30F2234814F00DD26E0 /* ArticleListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A23F30E2234814F00DD26E0 /* ArticleListScreen.swift */; };
 		8A23F317223482E500DD26E0 /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A23F316223482E500DD26E0 /* ArticleCell.swift */; };
 		8A26A6C922347025008528A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A26A6C822347025008528A4 /* AppDelegate.swift */; };
-		8A26A6CE22347025008528A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A26A6CC22347025008528A4 /* Main.storyboard */; };
+		8A26A6CE22347025008528A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A26A6CC22347025008528A4 /* Main.storyboard */; settings = {ASSET_TAGS = (1, ); }; };
 		8A26A6D022347026008528A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A26A6CF22347026008528A4 /* Assets.xcassets */; };
 		8A26A6D322347026008528A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A26A6D122347026008528A4 /* LaunchScreen.storyboard */; };
 		8A26A6DE22347026008528A4 /* PelicanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A26A6DD22347026008528A4 /* PelicanTests.swift */; };
@@ -23,7 +23,6 @@
 		8A81F04C2234C35500EC9466 /* RegularCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A81F04B2234C35500EC9466 /* RegularCell.swift */; };
 		8A81F0502234CD1800EC9466 /* sps.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8A81F04F2234CD1800EC9466 /* sps.jpg */; };
 		8A81F0522234EC3C00EC9466 /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A81F0512234EC3C00EC9466 /* ArticleViewController.swift */; };
-		8A81F05422359D3B00EC9466 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A81F05322359D3B00EC9466 /* ScrollView.swift */; };
 		8A81F0562235B7CB00EC9466 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A81F0552235B7CB00EC9466 /* Frame.swift */; };
 		8AAD25C422370987002747FB /* ClickHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAD25C322370987002747FB /* ClickHeadline.swift */; };
 		8AAD25C622370DF6002747FB /* GoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAD25C522370DF6002747FB /* GoHome.swift */; };
@@ -82,7 +81,6 @@
 		8A81F04B2234C35500EC9466 /* RegularCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularCell.swift; sourceTree = "<group>"; };
 		8A81F04F2234CD1800EC9466 /* sps.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sps.jpg; sourceTree = "<group>"; };
 		8A81F0512234EC3C00EC9466 /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
-		8A81F05322359D3B00EC9466 /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
 		8A81F0552235B7CB00EC9466 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		8AAD25C322370987002747FB /* ClickHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickHeadline.swift; sourceTree = "<group>"; };
 		8AAD25C522370DF6002747FB /* GoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoHome.swift; sourceTree = "<group>"; };
@@ -253,7 +251,6 @@
 		8AF0FD8522377F3B0066A7DA /* Article Classes */ = {
 			isa = PBXGroup;
 			children = (
-				8A81F05322359D3B00EC9466 /* ScrollView.swift */,
 				8A81F0552235B7CB00EC9466 /* Frame.swift */,
 			);
 			path = "Article Classes";
@@ -305,6 +302,9 @@
 		8A26A6BD22347025008528A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					1,
+				);
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Preston Willis";
@@ -440,7 +440,6 @@
 				8AAD25C8223711E3002747FB /* MenuViewController.swift in Sources */,
 				8A81F04C2234C35500EC9466 /* RegularCell.swift in Sources */,
 				8A632C502239C6FA00613978 /* About.swift in Sources */,
-				8A81F05422359D3B00EC9466 /* ScrollView.swift in Sources */,
 				8A632C522239C70B00613978 /* Bookmarks.swift in Sources */,
 				8AF349A1223A1A490074334C /* LoadingScreen.swift in Sources */,
 				8A632C4E2239C6EE00613978 /* PreviousIssue.swift in Sources */,

@@ -15,18 +15,18 @@ class ArticleViewController: UIViewController {
     @IBOutlet weak var article: UILabel!
     @IBOutlet weak var headline: UILabel!
     @IBOutlet weak var frame: Frame!
-    @IBOutlet weak var scrollView: ScrollView!
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var author: UILabel!
     var url: URL? = nil
+    @IBOutlet weak var image: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if SettingsTableViewController().changeColor(target: self, labels: [article, headline, date, author]) {
+       if SettingsTableViewController().changeColor(target: self, labels: [article, headline, date, author]) {
             frame.backgroundColor = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
-        }
-        else {
+       }
+       else {
             frame.backgroundColor = UIColor.white
         }
         

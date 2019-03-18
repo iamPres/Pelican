@@ -32,7 +32,9 @@ class SettingsTableViewController: UITableViewController {
                 label.textColor = lightColor
             }
             for i in target.view.subviews {
+                if i.isOpaque == true {
                 i.backgroundColor = darkBackground
+                }
             }
         }
         else {
@@ -42,7 +44,9 @@ class SettingsTableViewController: UITableViewController {
             }
             self.view.backgroundColor = lightColor
             for i in target.view.subviews {
+                if i.isOpaque == true {
                 i.backgroundColor = lightColor
+                }
             }
         }
         return UserDefaults.standard.object(forKey: "nightmode") as! Bool
