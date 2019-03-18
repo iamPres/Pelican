@@ -70,7 +70,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HuN-z2-LFO">
-                                                    <rect key="frame" x="100" y="12" width="302" height="65"/>
+                                                    <rect key="frame" x="100" y="12" width="263" height="65"/>
                                                     <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -485,6 +485,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="cell" destination="yV4-QJ-E4C" id="bsR-fn-vEz"/>
                         <outlet property="nightModeLabel" destination="NAf-IM-vsy" id="CPc-LX-HNW"/>
                         <outlet property="nightmode_outlet" destination="GUr-DG-osD" id="3Yk-nH-81N"/>
                         <outlet property="pelicanLabel" destination="5PQ-tQ-Lb2" id="SdL-KY-Ql7"/>
@@ -18315,7 +18316,7 @@ DgAQBRMAEAUbABAWhwAQFokAEBaOABAWnAAQFqAAEBanABAWrAAQFrkAEBa8ABAWyQAQFs4AEBbWABAW
         <image name="menu-button-of-three-horizontal-lines.png" width="480" height="480"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hqV-mR-uco"/>
+        <segue reference="ayL-76-ciu"/>
         <segue reference="F6O-P7-ytK"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

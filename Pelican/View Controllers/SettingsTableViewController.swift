@@ -13,6 +13,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var pelicanLabel: UILabel!
     @IBOutlet weak var nightModeLabel: UILabel!
     @IBOutlet weak var nightmode_outlet: UISwitch!
+    @IBOutlet weak var cell: UITableViewCell!
     
     let darkColor = UIColor.darkText
     let darkBackground = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
@@ -47,20 +48,15 @@ class SettingsTableViewController: UITableViewController {
         return UserDefaults.standard.object(forKey: "nightmode") as! Bool
     }
     
-    func viewDidAppear() {
+    override func viewWillAppear(_ animated: Bool) {
         nightmode_outlet.setOn(UserDefaults.standard.object(forKey: "nightmode") as! Bool, animated: true)
-        if changeColor(target: self, labels: [pelicanLabel, nightModeLabel]) {
-        self.tableView.sectionIndexBackgroundColor = darkBackground
+        
+        if changeColor(target: self, labels: [pelicanLabel, nightModeLabel]){
+            cell.backgroundColor = darkBackground
         }
         else {
-        self.tableView.sectionIndexBackgroundColor = lightColor
-        }
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+            cell.backgroundColor = lightColor        }
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -74,16 +70,6 @@ class SettingsTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 1
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
 
     /*
     // Override to support conditional editing of the table view.
