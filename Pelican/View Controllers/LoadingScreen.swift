@@ -68,7 +68,7 @@ class LoadingScreen: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = segue.destination as! ArticleListScreen
+        _ = segue.destination as! ArticleListScreen
         var imageData: [NSData] = []
         for i in 0..<(images.count) {
             imageData.append(images[i].pngData()! as NSData)

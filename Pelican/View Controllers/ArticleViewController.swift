@@ -40,7 +40,7 @@ class ArticleViewController: UIViewController {
                 NSLog("None")
             }
             self.getData(from: URL.init(string: attribute)!) { data, response, error  in
-                self.image.contentMode = .scaleAspectFit
+                //self.image.contentMode = .scaleAspectFit
                 self.image.image = UIImage(data: data!)
             }
 
@@ -63,9 +63,17 @@ class ArticleViewController: UIViewController {
             self.article.text = attribute
             self.article.sizeToFit()
             
-            self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.article.frame.size.height+self.headline.frame.size.height+200))
             
-            self.scrollView.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:self.article.frame.size.height+self.headline.frame.size.height+self.image.frame.height+200))
+            
+            self.scrollView.addConstraint(NSLayoutConstraint(item: self.scrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width))
+            
+            self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width))
+            
+            self.image.addConstraint(NSLayoutConstraint(item: self.image, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/3))
+            
+            self.scrollView.contentSize = CGSize(width: 375, height: self.article.frame.size.height+self.headline.frame.size.height+150)
+            
+            self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:self.article.frame.size.height+self.headline.frame.size.height+150))
 
             do{
                 let doc: Document = try SwiftSoup.parse(result)

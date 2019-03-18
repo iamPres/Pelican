@@ -9,7 +9,6 @@
 import UIKit
 
 class SettingsTableViewController: UITableViewController {
-    
     @IBOutlet weak var pelicanLabel: UILabel!
     @IBOutlet weak var nightModeLabel: UILabel!
     @IBOutlet weak var nightmode_outlet: UISwitch!
