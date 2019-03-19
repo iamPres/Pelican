@@ -633,6 +633,7 @@
                     </view>
                     <connections>
                         <outlet property="pelican" destination="Upr-Dd-UIu" id="FeQ-GC-gzc"/>
+                        <segue destination="J4k-CO-vZs" kind="custom" identifier="segue3" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="JsL-WI-AtF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zK5-14-Pfz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -642,7 +643,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1607.2" y="-728.57142857142856"/>
+            <point key="canvasLocation" x="-1569" y="-729"/>
         </scene>
         <!--About-->
         <scene sceneID="dml-ap-2jI">
@@ -18410,6 +18411,7 @@ DgAQBRMAEAUbABAWhwAQFokAEBaOABAWnAAQFqAAEBanABAWrAAQFrkAEBa8ABAWyQAQFs4AEBbWABAW
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="8qT-Xe-I8g"/>
+        <segue reference="JsL-WI-AtF"/>
         <segue reference="78X-wn-J94"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

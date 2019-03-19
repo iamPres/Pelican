@@ -27,26 +27,38 @@ class ArticleViewController: UIViewController {
     var result: [String] = []
     
     @IBAction func buttonAction(_ sender: UIButton) {
-        if (UserDefaults.standard.object(forKey: String(count)) as! Bool == true) {
+        if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == true) {
             if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == true) {
                 self.button.setImage(#imageLiteral(resourceName: "bookmark-outline-white.png"), for: UIControl.State.normal)
-                UserDefaults.standard.set(false, forKey: String(count))
+                var array = UserDefaults.standard.array(forKey: "bookmarkArray") as? [Bool]
+                array![count] = false
+                UserDefaults.standard.set(array, forKey: "bookmarkArray")
+                UserDefaults.standard.set(nil, forKey: "html"+String(count))
+                UserDefaults.standard.set(nil, forKey: "image"+String(count))
             }
             else if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == false) {
                 self.button.setImage(#imageLiteral(resourceName: "bookmark-outline.png"), for: UIControl.State.normal)
-                UserDefaults.standard.set(false, forKey: String(count))
+                var array: [Bool] = UserDefaults.standard.array(forKey: "bookmarkArray") as! [Bool]
+                array[count] = false
+                UserDefaults.standard.set(array, forKey: "bookmarkArray")
+                UserDefaults.standard.set(nil, forKey: "html"+String(count))
+                UserDefaults.standard.set(nil, forKey: "image"+String(count))
             }
         }
-        else if (UserDefaults.standard.object(forKey: String(count)) as! Bool == false) {
+        else if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == false) {
             if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == true) {
                 self.button.setImage(#imageLiteral(resourceName: "image.png"), for: UIControl.State.normal)
-                UserDefaults.standard.set(true, forKey: String(count))
+                var array = UserDefaults.standard.array(forKey: "bookmarkArray") as? [Bool]
+                array![count] = true
+                UserDefaults.standard.set(array, forKey: "bookmarkArray")
                 UserDefaults.standard.set(result, forKey: "html"+String(count))
                 UserDefaults.standard.set(data, forKey: "image"+String(count))
             }
             else if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == false) {
                 self.button.setImage(#imageLiteral(resourceName: "bookmark.png"), for: UIControl.State.normal)
-                UserDefaults.standard.set(true, forKey: String(count))
+                var array = UserDefaults.standard.array(forKey: "bookmarkArray") as? [Bool]
+                array![count] = true
+                UserDefaults.standard.set(array, forKey: "bookmarkArray")
                 UserDefaults.standard.set(result, forKey: "html"+String(count))
                 UserDefaults.standard.set(data, forKey: "image"+String(count))
             }
@@ -64,7 +76,7 @@ class ArticleViewController: UIViewController {
             frame.backgroundColor = UIColor.white
         }
         
-        if (UserDefaults.standard.object(forKey: String(count)) as! Bool == true && UserDefaults.standard.object(forKey: "image"+String(count)) != nil) {
+        if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == true && UserDefaults.standard.object(forKey: "image"+String(count)) != nil) {
             result = UserDefaults.standard.array(forKey: "html"+String(count)) as! [String]
             headline.text = result[0]
             article.text = result[1]
@@ -162,10 +174,7 @@ class ArticleViewController: UIViewController {
     }
     
     func setButton() {
-        if (UserDefaults.standard.object(forKey: String(self.count)) == nil) {
-            UserDefaults.standard.set(false, forKey: String(self.count))
-        }
-        if (UserDefaults.standard.object(forKey: String(self.count)) as! Bool == true) {
+        if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == true) {
             if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == true) {
                 self.button.setImage(#imageLiteral(resourceName: "image.png"), for: UIControl.State.normal)
             }
@@ -173,7 +182,7 @@ class ArticleViewController: UIViewController {
                 self.button.setImage(#imageLiteral(resourceName: "bookmark.png"), for: UIControl.State.normal)
             }
         }
-        else if (UserDefaults.standard.object(forKey: String(self.count)) as! Bool == false) {
+        else if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == false) {
             if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == true) {
                 self.button.setImage(#imageLiteral(resourceName: "bookmark-outline-white.png"), for: UIControl.State.normal)
             }

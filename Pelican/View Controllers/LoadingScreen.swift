@@ -91,10 +91,9 @@ class LoadingScreen: UIViewController {
             imageData.append(images[i].pngData()! as NSData)
         }
         
-        if (UserDefaults.standard.object(forKey: "bookmarkArray") == nil) {
+        if (UserDefaults.standard.array(forKey: "bookmarkArray") == nil) {
         var array: [Bool] = []
-            for i in 0..<(images.count) {
-                    UserDefaults.standard.set(false, forKey: String(i))
+            for _ in 0..<(images.count) {
                     array.append(false)
             }
         UserDefaults.standard.set(array, forKey: "bookmarkArray")
