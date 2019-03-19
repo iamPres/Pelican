@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		24CD5AE3561C932BA4CA40B5 /* Pods_Pelican.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6DFF97CC2B2E8F221BFE73 /* Pods_Pelican.framework */; };
+		8A2268AF2240A82D00819167 /* bookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A2268AE2240A82B00819167 /* bookmark.png */; };
+		8A2268B12240AD6000819167 /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A2268B02240AD5F00819167 /* image.png */; };
 		8A23F30F2234814F00DD26E0 /* ArticleListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A23F30E2234814F00DD26E0 /* ArticleListScreen.swift */; };
 		8A23F317223482E500DD26E0 /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A23F316223482E500DD26E0 /* ArticleCell.swift */; };
 		8A26A6C922347025008528A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A26A6C822347025008528A4 /* AppDelegate.swift */; };
@@ -61,6 +63,8 @@
 /* Begin PBXFileReference section */
 		00795247A846F9BF0E9F5D8A /* Pods-Pelican.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pelican.release.xcconfig"; path = "Target Support Files/Pods-Pelican/Pods-Pelican.release.xcconfig"; sourceTree = "<group>"; };
 		5C6DFF97CC2B2E8F221BFE73 /* Pods_Pelican.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pelican.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A2268AE2240A82B00819167 /* bookmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bookmark.png; path = Pelican/Images/bookmark.png; sourceTree = SOURCE_ROOT; };
+		8A2268B02240AD5F00819167 /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image.png; path = Pelican/Images/image.png; sourceTree = SOURCE_ROOT; };
 		8A23F30E2234814F00DD26E0 /* ArticleListScreen.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ArticleListScreen.swift; sourceTree = "<group>"; tabWidth = 4; };
 		8A23F316223482E500DD26E0 /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
 		8A253ECD6C72356910AE151A /* Pods-Pelican.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pelican.debug.xcconfig"; path = "Target Support Files/Pods-Pelican/Pods-Pelican.debug.xcconfig"; sourceTree = "<group>"; };
@@ -191,6 +195,8 @@
 		8AF0FD8022377E5F0066A7DA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8A2268AE2240A82B00819167 /* bookmark.png */,
+				8A2268B02240AD5F00819167 /* image.png */,
 				8AAD25D722375393002747FB /* corporate.png */,
 				8AF349B4223B2F4B0074334C /* logo-dark.png */,
 				8AAD25DB223753A3002747FB /* outside-page.png */,
@@ -345,6 +351,7 @@
 				8AF349B0223B2D7F0074334C /* outside-page-white.png in Resources */,
 				8AF349B5223B2F4C0074334C /* logo-dark.png in Resources */,
 				8AAD25D62237537B002747FB /* settings.png in Resources */,
+				8A2268B12240AD6000819167 /* image.png in Resources */,
 				8AAD25D022375355002747FB /* bookmark-outline.png in Resources */,
 				8AAD25DC223753A3002747FB /* outside-page.png in Resources */,
 				8AC54AB9223702FF00783160 /* menu-button-of-three-horizontal-lines.png in Resources */,
@@ -353,6 +360,7 @@
 				8A26A6E9223470E1008528A4 /* LOGO.png in Resources */,
 				8A26A6D322347026008528A4 /* LaunchScreen.storyboard in Resources */,
 				8A26A6D022347026008528A4 /* Assets.xcassets in Resources */,
+				8A2268AF2240A82D00819167 /* bookmark.png in Resources */,
 				8AAD25D822375393002747FB /* corporate.png in Resources */,
 				8A81F0482234969100EC9466 /* polititian.jpg in Resources */,
 				8AF0FD7F223756420066A7DA /* info.png in Resources */,

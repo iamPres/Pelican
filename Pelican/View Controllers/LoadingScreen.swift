@@ -11,17 +11,34 @@ import Alamofire
 import SwiftSoup
 
 class LoadingScreen: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        UserDefaults.standard.set(false, forKey: "nightmode")
-    }
-    
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var loading: UIActivityIndicatorView!
+    @IBOutlet weak var menuButton: UIButton!
     var images: [UIImage] = []
     var titles: [String] = []
+    var count: Int = 0
+    var array: [Int] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if SettingsTableViewController().changeColor(target: self, labels: [label]) {
+            loading.color = UIColor.white
+            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
+            menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines-white.png"), for: UIControl.State.normal)
+        }
+        else {
+            loading.color = UIColor.black
+            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().lightColor
+            menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines.png"), for: UIControl.State.normal)
+        }
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ArticleListScreen") as? ArticleListScreen
+        
+        if (UserDefaults.standard.object(forKey: "nightmode") == nil) {
+            UserDefaults.standard.set(false, forKey: "nightmode")
+        }
         
         for _ in 0..<((vc?.url.count)!) {
             images.append(UIImage.init())
@@ -73,6 +90,16 @@ class LoadingScreen: UIViewController {
         for i in 0..<(images.count) {
             imageData.append(images[i].pngData()! as NSData)
         }
+        
+        if (UserDefaults.standard.object(forKey: "bookmarkArray") == nil) {
+        var array: [Bool] = []
+            for i in 0..<(images.count) {
+                    UserDefaults.standard.set(false, forKey: String(i))
+                    array.append(false)
+            }
+        UserDefaults.standard.set(array, forKey: "bookmarkArray")
+        }
+        
         UserDefaults.standard.set(imageData, forKey: "images")
         UserDefaults.standard.set(self.titles, forKey: "titles")
         UserDefaults.standard.synchronize()

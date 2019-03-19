@@ -42,6 +42,7 @@ class ArticleListScreen: UIViewController {
         if segue.destination.title == "ArticleViewController" {
             let vc = segue.destination as! ArticleViewController
             vc.url = url[index]
+            vc.count = index
         }
     }
     
@@ -52,7 +53,6 @@ class ArticleListScreen: UIViewController {
     func parseHTML(index: Int, completionHandler: @escaping (String) -> Void){
         Alamofire.request(url[index]).responseString { response in
             if let html: String = response.result.value {
-                //NSLog(html)
                 completionHandler(html)
             }
         }
@@ -62,9 +62,6 @@ class ArticleListScreen: UIViewController {
 extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        DispatchQueue.main.async() {
-            tableView.reloadData()
-        }
         return url.count
     }
     
@@ -73,7 +70,6 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
         if(indexPath.row == 0){
             tableView.rowHeight = 90
             tableView.separatorStyle = .singleLine
-            //cell.titleLabel.addConstraint(NSLayoutConstraint(item: cell.titleLabel, attribute: .bottom, relatedBy: .equal, toItem: cell, attribute: .bottom, multiplier: 1, constant: 0))
         }
         else if (indexPath.row == 5){
             tableView.separatorStyle = .none

@@ -13,14 +13,21 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var nightModeLabel: UILabel!
     @IBOutlet weak var nightmode_outlet: UISwitch!
     @IBOutlet weak var cell: UITableViewCell!
+    @IBOutlet weak var pushnotifications: UILabel!
+    @IBOutlet weak var notificationsSwitch: UISwitch!
+    @IBOutlet weak var notificationsCell: UITableViewCell!
     
     let darkColor = UIColor.darkText
     let darkBackground = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
     let lightColor = UIColor.white
     
+    @IBAction func notifyme(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: "notifyme")
+    }
+    
     @IBAction func nightmode(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: "nightmode")
-        changeColor(target: self, labels: [pelicanLabel, nightModeLabel])
+        changeColor(target: self, labels: [pelicanLabel, nightModeLabel, pushnotifications])
     }
     
     public func changeColor(target: UIViewController, labels: [UILabel]) -> Bool {
@@ -52,13 +59,23 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        nightmode_outlet.setOn(UserDefaults.standard.object(forKey: "nightmode") as! Bool, animated: true)
+        if (UserDefaults.standard.object(forKey: "nightmode") != nil) {
+            nightmode_outlet.setOn(UserDefaults.standard.object(forKey: "nightmode") as! Bool, animated: true)
+        }
+        if (UserDefaults.standard.object(forKey: "notifyme") != nil) {
+            notificationsSwitch.setOn(UserDefaults.standard.object(forKey: "notifyme") as! Bool, animated: true)
+        }
         
-        if changeColor(target: self, labels: [pelicanLabel, nightModeLabel]){
+        if changeColor(target: self, labels: [pelicanLabel, nightModeLabel, pushnotifications]){
             cell.backgroundColor = darkBackground
+            notificationsCell.backgroundColor = darkBackground
+            self.tableView.separatorColor = UIColor.darkGray
         }
         else {
-            cell.backgroundColor = lightColor        }
+            cell.backgroundColor = lightColor
+            notificationsCell.backgroundColor = lightColor
+            self.tableView.separatorColor = UIColor.lightGray
+        }
 
     }
 
@@ -71,52 +88,6 @@ class SettingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return 2
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
