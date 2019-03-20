@@ -6,6 +6,10 @@
 //  Copyright © 2019 Preston Willis. All rights reserved.
 //
 
+/*
+ SettingsTableViewController records and saves settings data to sotrage
+ */
+
 import UIKit
 
 class SettingsTableViewController: UITableViewController {
@@ -17,19 +21,27 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var notificationsSwitch: UISwitch!
     @IBOutlet weak var notificationsCell: UITableViewCell!
     
+    // Color palette for nightmode
     let darkColor = UIColor.darkText
     let darkBackground = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
     let lightColor = UIColor.white
     
+    // Handle push notifications state
     @IBAction func notifyme(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: "notifyme")
     }
     
+    // Handle nightmode state
     @IBAction func nightmode(_ sender: UISwitch) {
+        
+        // Save nightmode state to storage
         UserDefaults.standard.set(sender.isOn, forKey: "nightmode")
+        
+        // Nightmode settings
         changeColor(target: self, labels: [pelicanLabel, nightModeLabel, pushnotifications])
     }
     
+    // Set view attributes for nightmode
     public func changeColor(target: UIViewController, labels: [UILabel]) -> Bool {
         if UserDefaults.standard.object(forKey: "nightmode") as? Bool == true {
             target.view.backgroundColor = darkBackground
@@ -55,10 +67,14 @@ class SettingsTableViewController: UITableViewController {
                 }
             }
         }
+        
+        // Return nightmode state for further handling
         return UserDefaults.standard.object(forKey: "nightmode") as! Bool
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        // Set switches according to saved state
         if (UserDefaults.standard.object(forKey: "nightmode") != nil) {
             nightmode_outlet.setOn(UserDefaults.standard.object(forKey: "nightmode") as! Bool, animated: true)
         }
@@ -66,6 +82,7 @@ class SettingsTableViewController: UITableViewController {
             notificationsSwitch.setOn(UserDefaults.standard.object(forKey: "notifyme") as! Bool, animated: true)
         }
         
+        // Nightmode settings
         if changeColor(target: self, labels: [pelicanLabel, nightModeLabel, pushnotifications]){
             cell.backgroundColor = darkBackground
             notificationsCell.backgroundColor = darkBackground

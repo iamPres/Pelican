@@ -623,15 +623,26 @@
                                     <outlet property="delegate" destination="x4f-Mu-s3w" id="ikE-Bm-LkL"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HELLO" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pK8-u9-pqz">
+                                <rect key="frame" x="153.66666666666666" y="393" width="67.666666666666657" height="26"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="pK8-u9-pqz" firstAttribute="centerX" secondItem="lEm-8f-UKz" secondAttribute="centerX" id="4fu-dK-ft9"/>
+                            <constraint firstItem="pK8-u9-pqz" firstAttribute="centerY" secondItem="lEm-8f-UKz" secondAttribute="centerY" id="d2s-mK-oMP"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="l0e-9Q-YhK"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="oGY-NR-r7e" appends="YES" id="NhK-a5-sWZ"/>
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="message" destination="pK8-u9-pqz" id="Dca-3M-Ols"/>
                         <outlet property="pelican" destination="Upr-Dd-UIu" id="FeQ-GC-gzc"/>
                         <segue destination="J4k-CO-vZs" kind="custom" identifier="segue3" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="JsL-WI-AtF"/>
                     </connections>
@@ -643,7 +654,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1569" y="-729"/>
+            <point key="canvasLocation" x="-1570.4000000000001" y="-729.31034482758628"/>
         </scene>
         <!--About-->
         <scene sceneID="dml-ap-2jI">

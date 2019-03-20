@@ -6,6 +6,9 @@
 //  Copyright © 2019 Preston Willis. All rights reserved.
 //
 
+
+// ---------------- COMING SOON ---------------- //
+
 import UIKit
 
 class PreviousIssue: UIViewController {
@@ -13,6 +16,8 @@ class PreviousIssue: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Nightmode settings
         SettingsTableViewController().changeColor(target: self, labels: [pelican])
     }
 }

@@ -19,6 +19,8 @@ class About: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Nightmode settings
         SettingsTableViewController().changeColor(target: self, labels: [author,authorname,dateofpublication,date,inquiries,email,pelican])
  
     }
