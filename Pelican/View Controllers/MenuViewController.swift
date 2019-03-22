@@ -79,7 +79,7 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
             images = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")]
             tableView.separatorColor = UIColor.lightGray
         }
-            cell.imageView!.image = images[indexPath.row]
+            cell.picture.image = images[indexPath.row]
             return cell
         }
     

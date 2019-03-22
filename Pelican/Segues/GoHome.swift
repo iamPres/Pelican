@@ -6,6 +6,10 @@
 //  Copyright © 2019 Preston Willis. All rights reserved.
 //
 
+ /*
+ Backwards transition animation
+ */
+
 import UIKit
 
 class GoHome: UIStoryboardSegue {
@@ -20,9 +24,11 @@ class GoHome: UIStoryboardSegue {
         
         let containerView = fromViewController.view.superview
         
+        // Move destination view 500 to the right and prepare view heirarchy
         toViewController.view.transform = CGAffineTransform(translationX: -500, y: 0)
         containerView?.addSubview(toViewController.view)
         
+        // Animate
         UIView.animate(withDuration: 0.5, delay:0, options: .curveEaseInOut, animations: {
             toViewController.view.transform = CGAffineTransform.identity
         }, completion: {

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Preston Willis. All rights reserved.
 //
 
-/*
+ /*
  ArticleViewController loads / writes / purges article data
  from storage based on bookmarked state. It also scrapes article content
  from a URL passed from ArticleListScreen if not bookmarked.

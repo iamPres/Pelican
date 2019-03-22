@@ -16,18 +16,27 @@ import UIKit
 class Bookmarks: UIViewController {
     @IBOutlet weak var pelican: UILabel!
     @IBOutlet weak var message: UILabel!
+    @IBOutlet weak var messageImage: UIImageView!
+    
     var index: Int = 0 // Index of bookmarked article to load in ArticleViewController
     var count: Int = 0 // Number of bookmarked articles
     var indexes: [Int] = [] // Storage indexes of bookmarked articles
+    
+    var image: UIImage? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set constraints
-        self.message.addConstraint(NSLayoutConstraint(item: self.message, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width-100))
+        self.message.addConstraint(NSLayoutConstraint(item: self.message, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width-200))
         
         // Nightmode settings
-        SettingsTableViewController().changeColor(target: self, labels: [pelican, message])
+        if SettingsTableViewController().changeColor(target: self, labels: [pelican, message]) {
+            image = #imageLiteral(resourceName: "bookmark-outline-white.png")
+        }
+        else {
+            image = #imageLiteral(resourceName: "bookmark-outline.png")
+        }
         
         // Iterate through saved bookmarks and log indexes
         for i in 0..<(UserDefaults.standard.array(forKey: "bookmarkArray")!.count) {
@@ -58,7 +67,8 @@ extension Bookmarks: UITableViewDataSource, UITableViewDelegate {
         // If no bookmarked articles, make table invisible and add informative message
         if count == 0
         {
-            message.text = "Nothing to see here.. Bookmark an article to view it offline!"
+            messageImage.image = image
+            message.text = "Nothing to see here."
             tableView.separatorStyle = .none
         }
         else {

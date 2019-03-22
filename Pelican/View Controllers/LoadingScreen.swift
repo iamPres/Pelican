@@ -22,6 +22,7 @@ class LoadingScreen: UIViewController {
     @IBOutlet weak var menuButton: UIButton!
     var images: [UIImage] = [] // ArticleListScreen thumbnail images
     var titles: [String] = [] // ArticleListScreen titles
+    var timeout: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,17 +90,26 @@ class LoadingScreen: UIViewController {
     }
     
     func test(){
+        timeout += 1
         
-        //Wait 0.5s (Separate thread)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            
-            //If all content loaded, proceed to prepare(), else test()
-            if (self.titles.contains("")){
-                self.test()
+        // Wait 0.5s in a seperate thread (Max 10s)
+        if timeout <= 20 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                UserDefaults.standard.set(false, forKey: "timedout")
+                
+                //If all content loaded, proceed to prepare(), else test()
+                if (self.titles.contains("")){
+                    self.test()
+                }
+                else{
+                    self.performSegue(withIdentifier: "segue1", sender: nil)
+                }
             }
-            else{
-                self.performSegue(withIdentifier: "segue1", sender: nil)
-            }
+        }
+        else {
+            // Timeout after 10s
+            UserDefaults.standard.set(true, forKey: "timedout")
+            self.performSegue(withIdentifier: "segue1", sender: nil)
         }
     }
 
@@ -107,8 +117,17 @@ class LoadingScreen: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         _ = segue.destination as! ArticleListScreen
         var imageData: [NSData] = []
-        for i in 0..<(images.count) {
-            imageData.append(images[i].pngData()! as NSData)
+        
+        // If everything loaded, set attributes. Else, present nothing.
+        if timeout <= 20 {
+            for i in 0..<(images.count) {
+                imageData.append(images[i].pngData()! as NSData)
+            }
+        }
+        else {
+            for _ in 0..<(images.count) {
+                imageData.append(#imageLiteral(resourceName: "blank.png").pngData()! as NSData)
+            }
         }
         
         // If bookmark state matrix doesnt exist, make it
@@ -121,6 +140,7 @@ class LoadingScreen: UIViewController {
         // Save bookmark matrix to storage
         UserDefaults.standard.set(array, forKey: "bookmarkArray")
         }
+        
         // Save titles and thumbnails to storage
         UserDefaults.standard.set(imageData, forKey: "images")
         UserDefaults.standard.set(self.titles, forKey: "titles")

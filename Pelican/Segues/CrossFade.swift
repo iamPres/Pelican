@@ -6,6 +6,10 @@
 //  Copyright © 2019 Preston Willis. All rights reserved.
 //
 
+ /*
+ Loading screen transition animation
+ */
+
 import UIKit
 
 class CrossFade: UIStoryboardSegue {
@@ -13,10 +17,12 @@ class CrossFade: UIStoryboardSegue {
         let source = self.source as UIViewController
         let destination = self.destination as UIViewController
         let window = UIApplication.shared.keyWindow!
-            
+        
+        // Set destination and prepare view heirarchy
         destination.view.alpha = 0.0
         window.insertSubview(destination.view, belowSubview: source.view)
-            
+        
+        // Animate
         UIView.animate(withDuration: 0.5, animations: { () -> Void in
             source.view.alpha = 0.0
             destination.view.alpha = 1.0

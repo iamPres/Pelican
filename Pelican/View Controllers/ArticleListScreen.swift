@@ -18,6 +18,8 @@ import Alamofire
 class ArticleListScreen: UIViewController {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var errorImage: UIImageView!
     
     var index: Int = 0 // Index of selected cell to pass into ArticleViewController
     var titles: [String] = [] // Article titles
@@ -35,8 +37,18 @@ class ArticleListScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Constraints
+        self.errorLabel.addConstraint(NSLayoutConstraint(item: self.errorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width-200))
+        
+        //Error Label
+        errorLabel.text = ""
+        if (UserDefaults.standard.object(forKey: "timedout") as! Bool){
+            errorImage.image = #imageLiteral(resourceName: "white-buttons-png-8.png")
+            errorLabel.text = "Unable to locate this rescource."
+        }
+        
         // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [label]) {
+        if SettingsTableViewController().changeColor(target: self, labels: [label,errorLabel]) {
             self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
                 menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines-white.png"), for: UIControl.State.normal)
         }
@@ -84,17 +96,16 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
         // Init. new cell as ArticleCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell") as! ArticleCell
         
-        if(indexPath.row == 0){
-            tableView.rowHeight = 90
-            tableView.separatorStyle = .singleLine
-        }
-        else if (indexPath.row == 5){
+        // Set table attributes
+        tableView.rowHeight = 90
+        tableView.separatorStyle = .singleLine
+        
+        // Make the table disappear if timed out
+        if (UserDefaults.standard.object(forKey: "timedout") as! Bool){
             tableView.separatorStyle = .none
         }
-        else{
-            tableView.rowHeight = 90
-        }
         
+        // Make sure everything only loads once
         if loaded < url.count {
             loaded += 1
             cell.thumbnail.contentMode = .scaleAspectFit
@@ -113,6 +124,7 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
             cell.backgroundColor = SettingsTableViewController().lightColor
             tableView.separatorColor = UIColor.lightGray
         }
+        
         return cell
     }
     
