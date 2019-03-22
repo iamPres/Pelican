@@ -41,6 +41,7 @@ extension PreviousIssue: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // If no bookmarked articles, make table invisible and add informative message
+        messageImage.image = #imageLiteral(resourceName: "output-onlinepngtools.png")
         if count == 0
         {
             messageImage.image = image

@@ -16,6 +16,7 @@ import UIKit
 class MenuViewController: UIViewController {
     let titles: [String] = ["Previous Issues", "Bookmarks", "Settings", "Website", "About"] // Cell titles
     var images: [UIImage] = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")] // Cell thumbnails
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
     
     @IBOutlet weak var pelican: UILabel!
     
@@ -53,6 +54,7 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
     
     // Set cell attributes
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         tableView.rowHeight = 90
     
         if indexPath.row == 4 {
@@ -85,6 +87,8 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
     
     // Handle cell selection
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        impact.impactOccurred()
         
         // If fourth cell selected, load website
         if indexPath.row == 3{

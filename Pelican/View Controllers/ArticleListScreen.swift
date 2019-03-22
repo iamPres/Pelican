@@ -21,10 +21,17 @@ class ArticleListScreen: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var errorImage: UIImageView!
     
+    let notification = UINotificationFeedbackGenerator()
+    let selection = UISelectionFeedbackGenerator()
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
+    
     var index: Int = 0 // Index of selected cell to pass into ArticleViewController
     var titles: [String] = [] // Article titles
     var images: [UIImage] = [] // Article thumbnails
     var loaded: Int = 0
+    var lastContentOffset: CGFloat = 0 // Set a variable to hold the contentOffSet before scroll view scrolls
+    
+    var isReady: Bool = true
     
     // URLS to scrape
     let url: [URL] = [URL(string: "https://www.businessinsider.com/amazon-web-services-open-source-elasticsearch-2019-3")!,
@@ -36,34 +43,44 @@ class ArticleListScreen: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setErrorView()
+        setNightView()
+    }
+    
+    // Set ArticleViewController attributes before loading view
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        impact.impactOccurred()
+        if segue.destination.title == "ArticleViewController" {
+            let vc = segue.destination as! ArticleViewController
+            vc.url = url[index]
+            vc.count = index
+        }
+    }
         
+    func setNightView() {
+        // Nightmode settings
+        if SettingsTableViewController().changeColor(target: self, labels: [label,errorLabel]) {
+            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
+            menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines-white.png"), for: UIControl.State.normal)
+        }
+        else {
+            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().lightColor
+            menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines.png"), for: UIControl.State.normal)
+        }
+    }
+    
+    func setErrorView(){
         //Constraints
         self.errorLabel.addConstraint(NSLayoutConstraint(item: self.errorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width-200))
         
         //Error Label
         errorLabel.text = ""
+        errorImage.image = #imageLiteral(resourceName: "output-onlinepngtools.png")
+        
         if (UserDefaults.standard.object(forKey: "timedout") as! Bool){
             errorImage.image = #imageLiteral(resourceName: "white-buttons-png-8.png")
             errorLabel.text = "Unable to locate this rescource."
-        }
-        
-        // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [label,errorLabel]) {
-            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
-                menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines-white.png"), for: UIControl.State.normal)
-        }
-        else {
-             self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().lightColor
-                menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines.png"), for: UIControl.State.normal)
-        }
-    }
-    
-    // Set ArticleViewController attributes before loading view
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination.title == "ArticleViewController" {
-            let vc = segue.destination as! ArticleViewController
-            vc.url = url[index]
-            vc.count = index
         }
     }
     
@@ -101,9 +118,17 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
         tableView.separatorStyle = .singleLine
         
         // Make the table disappear if timed out
-        if (UserDefaults.standard.object(forKey: "timedout") as! Bool){
+        if (indexPath.row == url.count-1){
             tableView.separatorStyle = .none
         }
+        
+        if UserDefaults.standard.object(forKey: "timedout") as! Bool {
+            tableView.isHidden = true
+        }
+        else {
+            tableView.isHidden = false
+        }
+        
         
         // Make sure everything only loads once
         if loaded < url.count {
@@ -114,6 +139,8 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
             cell.thumbnail.image = UIImage(data: (UserDefaults.standard.array(forKey: "images")![indexPath.row] as! NSData) as Data)
             cell.titleLabel.text = UserDefaults.standard.array(forKey: "titles")![indexPath.row] as? String
         }
+        
+       
         
         // Nightmode settings
         if SettingsTableViewController().changeColor(target: self, labels: [cell.titleLabel]) {
@@ -135,6 +162,21 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
         
         // prepare() and load view
         self.performSegue(withIdentifier: "segue2", sender: nil)
+    }
+    
+    // this delegate is called when the scrollView (i.e your UITableView) will start scrolling
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.lastContentOffset = scrollView.contentOffset.y
+    }
+    
+    // while scrolling this delegate is being called so you may now check which direction your scrollView is being scrolled to
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if (self.lastContentOffset > scrollView.contentOffset.y+50 && scrollView.scrollsToTop && scrollView.isDecelerating && self.isReady) {
+                notification.notificationOccurred(.error)
+                self.performSegue(withIdentifier: "load", sender: nil)
+                self.isReady = false
+        }
     }
 }
 

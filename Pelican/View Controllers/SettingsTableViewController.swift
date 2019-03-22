@@ -20,6 +20,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var pushnotifications: UILabel!
     @IBOutlet weak var notificationsSwitch: UISwitch!
     @IBOutlet weak var notificationsCell: UITableViewCell!
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
     
     // Color palette for nightmode
     let darkColor = UIColor.darkText
@@ -28,11 +29,13 @@ class SettingsTableViewController: UITableViewController {
     
     // Handle push notifications state
     @IBAction func notifyme(_ sender: UISwitch) {
+        impact.impactOccurred()
         UserDefaults.standard.set(sender.isOn, forKey: "notifyme")
     }
     
     // Handle nightmode state
     @IBAction func nightmode(_ sender: UISwitch) {
+        impact.impactOccurred()
         
         // Save nightmode state to storage
         UserDefaults.standard.set(sender.isOn, forKey: "nightmode")

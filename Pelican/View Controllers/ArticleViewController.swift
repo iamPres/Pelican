@@ -26,6 +26,7 @@ class ArticleViewController: UIViewController {
     @IBOutlet weak var author: UILabel!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var image: UIImageView!
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
     
     var data: Data? // Image data
     var url: URL? = nil // URL to scrape
@@ -42,6 +43,8 @@ class ArticleViewController: UIViewController {
          - "html" holds the elements of each article
          - "image" holds the raw data of each thumbnail image
          */
+        
+        impact.impactOccurred()
         
         if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == true) {
             if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == true) {
@@ -93,13 +96,7 @@ class ArticleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [article, headline, date, author]) {
-            frame.backgroundColor = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
-        }
-        else {
-            frame.backgroundColor = UIColor.white
-        }
+        setNightMode()
         
         // If the page is bookmarked, load contents from storage
         if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == true && UserDefaults.standard.object(forKey: "image"+String(count)) != nil) {
@@ -118,6 +115,16 @@ class ArticleViewController: UIViewController {
         // Else, scrape content from the web
         else {
             loadContent()
+        }
+    }
+    
+    func setNightMode(){
+        // Nightmode settings
+        if SettingsTableViewController().changeColor(target: self, labels: [article, headline, date, author]) {
+            frame.backgroundColor = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
+        }
+        else {
+            frame.backgroundColor = UIColor.white
         }
     }
     

@@ -10,7 +10,7 @@
 		24CD5AE3561C932BA4CA40B5 /* Pods_Pelican.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6DFF97CC2B2E8F221BFE73 /* Pods_Pelican.framework */; };
 		8A1E02962244335300FD8EA2 /* white-buttons-png-8.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E02952244335300FD8EA2 /* white-buttons-png-8.png */; };
 		8A1E02982244360300FD8EA2 /* imageonline-co-invertedimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E02972244360200FD8EA2 /* imageonline-co-invertedimage.png */; };
-		8A1E02A222446BC400FD8EA2 /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E02A122446BC400FD8EA2 /* blank.png */; };
+		8A1E02A82244945300FD8EA2 /* output-onlinepngtools.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E02A72244945300FD8EA2 /* output-onlinepngtools.png */; };
 		8A2268AF2240A82D00819167 /* bookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A2268AE2240A82B00819167 /* bookmark.png */; };
 		8A2268B12240AD6000819167 /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A2268B02240AD5F00819167 /* image.png */; };
 		8A23F30F2234814F00DD26E0 /* ArticleListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A23F30E2234814F00DD26E0 /* ArticleListScreen.swift */; };
@@ -63,7 +63,7 @@
 		8A1E02942242F1D900FD8EA2 /* Pelican.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pelican.entitlements; sourceTree = "<group>"; };
 		8A1E02952244335300FD8EA2 /* white-buttons-png-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-buttons-png-8.png"; sourceTree = "<group>"; };
 		8A1E02972244360200FD8EA2 /* imageonline-co-invertedimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "imageonline-co-invertedimage.png"; path = "Pelican/Images/imageonline-co-invertedimage.png"; sourceTree = SOURCE_ROOT; };
-		8A1E02A122446BC400FD8EA2 /* blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blank.png; path = Pelican/Images/blank.png; sourceTree = SOURCE_ROOT; };
+		8A1E02A72244945300FD8EA2 /* output-onlinepngtools.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "output-onlinepngtools.png"; path = "Pelican/Images/output-onlinepngtools.png"; sourceTree = SOURCE_ROOT; };
 		8A2268AE2240A82B00819167 /* bookmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bookmark.png; path = Pelican/Images/bookmark.png; sourceTree = SOURCE_ROOT; };
 		8A2268B02240AD5F00819167 /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image.png; path = Pelican/Images/image.png; sourceTree = SOURCE_ROOT; };
 		8A23F30E2234814F00DD26E0 /* ArticleListScreen.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ArticleListScreen.swift; sourceTree = "<group>"; tabWidth = 4; };
@@ -191,7 +191,7 @@
 		8AF0FD8022377E5F0066A7DA /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				8A1E02A122446BC400FD8EA2 /* blank.png */,
+				8A1E02A72244945300FD8EA2 /* output-onlinepngtools.png */,
 				8A1E02972244360200FD8EA2 /* imageonline-co-invertedimage.png */,
 				8A1E02952244335300FD8EA2 /* white-buttons-png-8.png */,
 				8A2268AE2240A82B00819167 /* bookmark.png */,
@@ -355,9 +355,9 @@
 				8AC54AB9223702FF00783160 /* menu-button-of-three-horizontal-lines.png in Resources */,
 				8AF349B2223B2D7F0074334C /* bookmark-outline-white.png in Resources */,
 				8A26A6D322347026008528A4 /* LaunchScreen.storyboard in Resources */,
-				8A1E02A222446BC400FD8EA2 /* blank.png in Resources */,
 				8A1E02982244360300FD8EA2 /* imageonline-co-invertedimage.png in Resources */,
 				8A26A6D022347026008528A4 /* Assets.xcassets in Resources */,
+				8A1E02A82244945300FD8EA2 /* output-onlinepngtools.png in Resources */,
 				8A2268AF2240A82D00819167 /* bookmark.png in Resources */,
 				8A1E02962244335300FD8EA2 /* white-buttons-png-8.png in Resources */,
 				8AF0FD7F223756420066A7DA /* info.png in Resources */,

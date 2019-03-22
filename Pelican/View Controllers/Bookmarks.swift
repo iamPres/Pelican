@@ -18,6 +18,8 @@ class Bookmarks: UIViewController {
     @IBOutlet weak var message: UILabel!
     @IBOutlet weak var messageImage: UIImageView!
     
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
+    
     var index: Int = 0 // Index of bookmarked article to load in ArticleViewController
     var count: Int = 0 // Number of bookmarked articles
     var indexes: [Int] = [] // Storage indexes of bookmarked articles
@@ -29,6 +31,8 @@ class Bookmarks: UIViewController {
         
         // Set constraints
         self.message.addConstraint(NSLayoutConstraint(item: self.message, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width-200))
+        
+        messageImage.image = #imageLiteral(resourceName: "output-onlinepngtools.png")
         
         // Nightmode settings
         if SettingsTableViewController().changeColor(target: self, labels: [pelican, message]) {
@@ -91,6 +95,10 @@ extension Bookmarks: UITableViewDataSource, UITableViewDelegate {
         let attributes: [String] = UserDefaults.standard.array(forKey: "html"+String(indexes[indexPath.row])) as! [String]
         cell.titleLabel.text = attributes[0]
         
+        if indexPath.row == indexes.count-1 {
+            tableView.separatorStyle = .none
+        }
+        
         // Nightmode settings
         if SettingsTableViewController().changeColor(target: self, labels: [cell.titleLabel]) {
             cell.backgroundColor = SettingsTableViewController().darkBackground
@@ -106,6 +114,8 @@ extension Bookmarks: UITableViewDataSource, UITableViewDelegate {
     // Handle row selection
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         NSLog("SELECTED: "+String(indexPath.row))
+        
+        impact.impactOccurred()
         
         // set index to pass into ArticleViewController
         index = indexes[indexPath.row]
