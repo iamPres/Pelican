@@ -20,6 +20,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var pushnotifications: UILabel!
     @IBOutlet weak var notificationsSwitch: UISwitch!
     @IBOutlet weak var notificationsCell: UITableViewCell!
+    @IBOutlet weak var header: UIView!
     let impact = UIImpactFeedbackGenerator(style: .heavy)
     
     // Color palette for nightmode
@@ -77,6 +78,8 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        setConstraints()
+        
         // Set switches according to saved state
         if (UserDefaults.standard.object(forKey: "nightmode") != nil) {
             nightmode_outlet.setOn(UserDefaults.standard.object(forKey: "nightmode") as! Bool, animated: true)
@@ -96,8 +99,17 @@ class SettingsTableViewController: UITableViewController {
             notificationsCell.backgroundColor = lightColor
             self.tableView.separatorColor = UIColor.lightGray
         }
-
     }
+    
+    func setConstraints(){
+        if UIScreen.main.fixedCoordinateSpace.bounds.height == 667 || UIScreen.main.fixedCoordinateSpace.bounds.height == 736{
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:50))
+        }
+        else {
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
+        }
+    }
+
 
     // MARK: - Table view data source
 

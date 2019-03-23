@@ -17,11 +17,13 @@ class MenuViewController: UIViewController {
     let titles: [String] = ["Previous Issues", "Bookmarks", "Settings", "Website", "About"] // Cell titles
     var images: [UIImage] = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")] // Cell thumbnails
     let impact = UIImpactFeedbackGenerator(style: .heavy)
+    @IBOutlet weak var header: UIView!
     
     @IBOutlet weak var pelican: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setConstraints()
         
         // Nightmode settings
         SettingsTableViewController().changeColor(target: self, labels: [pelican])
@@ -42,6 +44,15 @@ class MenuViewController: UIViewController {
         }, completion: {
             success in self.present(newViewController, animated: false, completion: nil)
         })
+    }
+    
+    func setConstraints(){
+        if UIScreen.main.fixedCoordinateSpace.bounds.height == 667 || UIScreen.main.fixedCoordinateSpace.bounds.height == 736{
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:50))
+        }
+        else {
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
+        }
     }
 }
 

@@ -20,6 +20,8 @@ class LoadingScreen: UIViewController {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var loading: UIActivityIndicatorView!
     @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var header: UIView!
+    
     let notification = UINotificationFeedbackGenerator()
     var images: [Data?] = [] // ArticleListScreen thumbnail images
     var titles: [String] = [] // ArticleListScreen titles
@@ -30,16 +32,17 @@ class LoadingScreen: UIViewController {
         super.viewDidLoad()
         UserDefaults.standard.set(false, forKey: "isSegued")
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-        setNightView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
         
         // Init. Nightmode state
         if (UserDefaults.standard.object(forKey: "nightmode") == nil) {
             UserDefaults.standard.set(false, forKey: "nightmode")
         }
+        
+        setNightView()
+        setConstraints()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
         // Download all data (Multithreading..)
         if UserDefaults.standard.object(forKey: "isSegued") as! Bool != true {
@@ -119,6 +122,7 @@ class LoadingScreen: UIViewController {
     
     func setNightView(){
         // Nightmode setings
+        NSLog("ran")
         if SettingsTableViewController().changeColor(target: self, labels: [label]) {
             loading.color = UIColor.white
             self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
@@ -128,6 +132,15 @@ class LoadingScreen: UIViewController {
             loading.color = UIColor.black
             self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().lightColor
             menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines.png"), for: UIControl.State.normal)
+        }
+    }
+    
+    func setConstraints(){
+        if UIScreen.main.fixedCoordinateSpace.bounds.height == 667 || UIScreen.main.fixedCoordinateSpace.bounds.height == 736{
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:50))
+        }
+        else {
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
         }
     }
 

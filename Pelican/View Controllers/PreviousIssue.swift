@@ -15,6 +15,7 @@ class PreviousIssue: UIViewController {
     @IBOutlet weak var message: UILabel!
     @IBOutlet weak var pelican: UILabel!
     @IBOutlet weak var messageImage: UIImageView!
+    @IBOutlet weak var header: UIView!
     var image: UIImage? = nil
     var count = 0
     
@@ -22,7 +23,7 @@ class PreviousIssue: UIViewController {
         super.viewDidLoad()
         
         //Set Constraints
-        self.message.addConstraint(NSLayoutConstraint(item: self.message, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width-200))
+        setConstraints()
         
         // Nightmode settings
         if SettingsTableViewController().changeColor(target: self, labels: [pelican, message]) {
@@ -30,6 +31,18 @@ class PreviousIssue: UIViewController {
         }
         else {
             image = #imageLiteral(resourceName: "newspaper.png")
+        }
+    }
+    
+    func setConstraints(){
+        
+        self.message.addConstraint(NSLayoutConstraint(item: self.message, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width-200))
+        
+        if UIScreen.main.fixedCoordinateSpace.bounds.height == 667 || UIScreen.main.fixedCoordinateSpace.bounds.height == 736{
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:50))
+        }
+        else {
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
         }
     }
 }

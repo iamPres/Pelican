@@ -20,6 +20,7 @@ class ArticleListScreen: UIViewController {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var errorImage: UIImageView!
+    @IBOutlet weak var header: UIView!
     
     let notification = UINotificationFeedbackGenerator()
     let selection = UISelectionFeedbackGenerator()
@@ -46,6 +47,7 @@ class ArticleListScreen: UIViewController {
 
         setErrorView()
         setNightView()
+        setConstraints()
     }
     
     // Set ArticleViewController attributes before loading view
@@ -81,6 +83,15 @@ class ArticleListScreen: UIViewController {
         if (UserDefaults.standard.object(forKey: "timedout") as! Bool){
             errorImage.image = #imageLiteral(resourceName: "white-buttons-png-8.png")
             errorLabel.text = "Unable to locate this rescource."
+        }
+    }
+    
+    func setConstraints(){
+        if UIScreen.main.fixedCoordinateSpace.bounds.height == 667 || UIScreen.main.fixedCoordinateSpace.bounds.height == 736{
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:50))
+        }
+        else {
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
         }
     }
     
