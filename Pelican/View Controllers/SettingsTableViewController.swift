@@ -22,11 +22,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var notificationsCell: UITableViewCell!
     @IBOutlet weak var header: UIView!
     let impact = UIImpactFeedbackGenerator(style: .heavy)
-    
-    // Color palette for nightmode
-    let darkColor = UIColor.darkText
-    let darkBackground = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
-    let lightColor = UIColor.white
+    let Nightmode_class = Nightmode()
     
     // Handle push notifications state
     @IBAction func notifyme(_ sender: UISwitch) {
@@ -42,62 +38,23 @@ class SettingsTableViewController: UITableViewController {
         UserDefaults.standard.set(sender.isOn, forKey: "nightmode")
         
         // Nightmode settings
-        changeColor(target: self, labels: [pelicanLabel, nightModeLabel, pushnotifications])
-    }
-    
-    // Set view attributes for nightmode
-    public func changeColor(target: UIViewController, labels: [UILabel]) -> Bool {
-        if UserDefaults.standard.object(forKey: "nightmode") as? Bool == true {
-            target.view.backgroundColor = darkBackground
-            for label in labels {
-                label.textColor = lightColor
-                label.textColor = lightColor
-            }
-            for i in target.view.subviews {
-                if i.isOpaque == true {
-                i.backgroundColor = darkBackground
-                }
-            }
-        }
-        else {
-            for label in labels {
-                label.textColor = darkColor
-                label.textColor = darkColor
-            }
-            self.view.backgroundColor = lightColor
-            for i in target.view.subviews {
-                if i.isOpaque == true {
-                i.backgroundColor = lightColor
-                }
-            }
-        }
-        
-        // Return nightmode state for further handling
-        return UserDefaults.standard.object(forKey: "nightmode") as! Bool
+        nightmodeSettings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         setConstraints()
-        
+        nightmodeSettings()
+        setSwitchState()
+    }
+    
+    func setSwitchState() {
         // Set switches according to saved state
         if (UserDefaults.standard.object(forKey: "nightmode") != nil) {
             nightmode_outlet.setOn(UserDefaults.standard.object(forKey: "nightmode") as! Bool, animated: true)
         }
         if (UserDefaults.standard.object(forKey: "notifyme") != nil) {
             notificationsSwitch.setOn(UserDefaults.standard.object(forKey: "notifyme") as! Bool, animated: true)
-        }
-        
-        // Nightmode settings
-        if changeColor(target: self, labels: [pelicanLabel, nightModeLabel, pushnotifications]){
-            cell.backgroundColor = darkBackground
-            notificationsCell.backgroundColor = darkBackground
-            self.tableView.separatorColor = UIColor.darkGray
-        }
-        else {
-            cell.backgroundColor = lightColor
-            notificationsCell.backgroundColor = lightColor
-            self.tableView.separatorColor = UIColor.lightGray
         }
     }
     
@@ -109,7 +66,20 @@ class SettingsTableViewController: UITableViewController {
             self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
         }
     }
-
+    
+    func nightmodeSettings() {
+        // Nightmode settings
+        if Nightmode_class.changeColor(target: self, labels: [pelicanLabel, nightModeLabel, pushnotifications]) {
+            cell.backgroundColor = Nightmode_class.darkBackground
+            notificationsCell.backgroundColor = Nightmode_class.darkBackground
+            self.tableView.separatorColor = Nightmode_class.darkSeparator
+        }
+        else {
+            cell.backgroundColor = Nightmode_class.lightColor
+            notificationsCell.backgroundColor = Nightmode_class.lightColor
+            self.tableView.separatorColor = Nightmode_class.lightSeparator
+        }
+    }
 
     // MARK: - Table view data source
 

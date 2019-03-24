@@ -26,7 +26,9 @@ class ArticleViewController: UIViewController {
     @IBOutlet weak var author: UILabel!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var image: UIImageView!
+    
     let impact = UIImpactFeedbackGenerator(style: .heavy)
+    let Nightmode_class = Nightmode()
     
     var data: Data? // Image data
     var url: URL? = nil // URL to scrape
@@ -120,11 +122,11 @@ class ArticleViewController: UIViewController {
     
     func setNightMode(){
         // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [article, headline, date, author]) {
-            frame.backgroundColor = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
+        if Nightmode_class.changeColor(target: self, labels: [article, headline, date, author]) {
+            frame.backgroundColor = Nightmode_class.darkBackground
         }
         else {
-            frame.backgroundColor = UIColor.white
+            frame.backgroundColor = Nightmode_class.lightColor
         }
     }
     

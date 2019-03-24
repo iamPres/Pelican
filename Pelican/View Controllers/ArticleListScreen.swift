@@ -25,6 +25,7 @@ class ArticleListScreen: UIViewController {
     let notification = UINotificationFeedbackGenerator()
     let selection = UISelectionFeedbackGenerator()
     let impact = UIImpactFeedbackGenerator(style: .heavy)
+    let Nightmode_class = Nightmode()
     
     var index: Int = 0 // Index of selected cell to pass into ArticleViewController
     var titles: [String] = [] // Article titles
@@ -42,6 +43,7 @@ class ArticleListScreen: UIViewController {
                       URL(string: "https://www.businessinsider.com/highest-paying-job-in-every-us-state-2019-2")!,
                       URL(string: "https://www.businessinsider.com/theresa-may-defeated-on-eu-brexit-deal-meaningful-vote-for-second-time-2019-3")!]
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,12 +64,12 @@ class ArticleListScreen: UIViewController {
         
     func setNightView() {
         // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [label,errorLabel]) {
-            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
+        if Nightmode_class.changeColor(target: self, labels: [label,errorLabel]) {
+            self.view.viewWithTag(2)?.backgroundColor = Nightmode_class.darkBackground
             menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines-white.png"), for: UIControl.State.normal)
         }
         else {
-            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().lightColor
+            self.view.viewWithTag(2)?.backgroundColor = Nightmode_class.lightColor
             menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines.png"), for: UIControl.State.normal)
         }
     }
@@ -92,6 +94,34 @@ class ArticleListScreen: UIViewController {
         }
         else {
             self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
+        }
+    }
+    
+    func loadCellAttributes(cell: ArticleCell, tableView: UITableView, index: Int) {
+        
+        // Set table attributes
+        tableView.rowHeight = 90
+        tableView.separatorStyle = .singleLine
+        tableView.isHidden = false
+        
+        // Nightmode settings
+        if Nightmode_class.changeColor(target: self, labels: [cell.titleLabel]) {
+            cell.backgroundColor = Nightmode_class.darkBackground
+            tableView.separatorColor = Nightmode_class.darkSeparator
+        }
+        else {
+            cell.backgroundColor = Nightmode_class.lightColor
+            tableView.separatorColor = Nightmode_class.lightSeparator
+        }
+        
+        // Load corresponding cell attributes from storage as set in LoadingScreen
+        cell.thumbnail.contentMode = .scaleAspectFit
+        cell.thumbnail.image = UIImage(data: (UserDefaults.standard.array(forKey: "images")![index] as! NSData) as Data)
+        cell.titleLabel.text = UserDefaults.standard.array(forKey: "titles")![index] as? String
+        
+        // Make the table disappear if timed out
+        if (index == url.count-1){
+            tableView.separatorStyle = .none
         }
     }
     
@@ -124,43 +154,16 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
         // Init. new cell as ArticleCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell") as! ArticleCell
         
-        // Set table attributes
-        tableView.rowHeight = 90
-        tableView.separatorStyle = .singleLine
-        
-        // Make the table disappear if timed out
-        if (indexPath.row == url.count-1){
-            tableView.separatorStyle = .none
-        }
-        
-        if UserDefaults.standard.object(forKey: "timedout") as! Bool {
-            tableView.isHidden = true
-        }
-        else {
-            tableView.isHidden = false
-        }
-        
-        
         // Make sure everything only loads once
         if loaded < url.count {
             loaded += 1
-            cell.thumbnail.contentMode = .scaleAspectFit
             
-            // Load corresponding cell attributes from storage as set in LoadingScreen
-            cell.thumbnail.image = UIImage(data: (UserDefaults.standard.array(forKey: "images")![indexPath.row] as! NSData) as Data)
-            cell.titleLabel.text = UserDefaults.standard.array(forKey: "titles")![indexPath.row] as? String
-        }
-        
-       
-        
-        // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [cell.titleLabel]) {
-            cell.backgroundColor = SettingsTableViewController().darkBackground
-            tableView.separatorColor = UIColor.darkGray
-        }
-        else {
-            cell.backgroundColor = SettingsTableViewController().lightColor
-            tableView.separatorColor = UIColor.lightGray
+            if UserDefaults.standard.object(forKey: "timedout") as! Bool {
+                tableView.isHidden = true
+            }
+            else {
+                loadCellAttributes(cell: cell, tableView: tableView, index: indexPath.row)
+            }
         }
         
         return cell
@@ -168,7 +171,6 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
     
     // Handle row selection
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        NSLog("SELECTED"+String(indexPath.row))
         index = indexPath.row
         
         // prepare() and load view

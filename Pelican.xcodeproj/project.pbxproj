@@ -34,6 +34,7 @@
 		8AAD25D62237537B002747FB /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AAD25D52237537B002747FB /* settings.png */; };
 		8AAD25DC223753A3002747FB /* outside-page.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AAD25DB223753A3002747FB /* outside-page.png */; };
 		8AC54AB9223702FF00783160 /* menu-button-of-three-horizontal-lines.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC54AB8223702FF00783160 /* menu-button-of-three-horizontal-lines.png */; };
+		8AE7DE0422483D9E00480EBB /* Nightmode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE7DE0322483D9E00480EBB /* Nightmode.swift */; };
 		8AF0FD7F223756420066A7DA /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF0FD7E223756420066A7DA /* info.png */; };
 		8AF349A1223A1A490074334C /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF349A0223A1A490074334C /* LoadingScreen.swift */; };
 		8AF349A3223A2F8D0074334C /* CrossFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF349A2223A2F8D0074334C /* CrossFade.swift */; };
@@ -92,6 +93,7 @@
 		8AAD25D52237537B002747FB /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		8AAD25DB223753A3002747FB /* outside-page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outside-page.png"; sourceTree = "<group>"; };
 		8AC54AB8223702FF00783160 /* menu-button-of-three-horizontal-lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-button-of-three-horizontal-lines.png"; sourceTree = "<group>"; };
+		8AE7DE0322483D9E00480EBB /* Nightmode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nightmode.swift; sourceTree = "<group>"; };
 		8AF0FD7E223756420066A7DA /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		8AF349A0223A1A490074334C /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		8AF349A2223A2F8D0074334C /* CrossFade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossFade.swift; sourceTree = "<group>"; };
@@ -165,7 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1E02942242F1D900FD8EA2 /* Pelican.entitlements */,
-				8AF0FD8522377F3B0066A7DA /* Article Classes */,
+				8AF0FD8522377F3B0066A7DA /* Appearance */,
 				8AF0FD8422377F1F0066A7DA /* Segues */,
 				8AF0FD8322377F040066A7DA /* Table Cell Classes */,
 				8AF0FD8122377EBD0066A7DA /* View Controllers */,
@@ -247,12 +249,13 @@
 			path = Segues;
 			sourceTree = "<group>";
 		};
-		8AF0FD8522377F3B0066A7DA /* Article Classes */ = {
+		8AF0FD8522377F3B0066A7DA /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
 				8A81F0552235B7CB00EC9466 /* Frame.swift */,
+				8AE7DE0322483D9E00480EBB /* Nightmode.swift */,
 			);
-			path = "Article Classes";
+			path = Appearance;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -442,6 +445,7 @@
 				8AF349A7223AEEB60074334C /* SettingsTableViewController.swift in Sources */,
 				8A23F30F2234814F00DD26E0 /* ArticleListScreen.swift in Sources */,
 				8AAD25C8223711E3002747FB /* MenuViewController.swift in Sources */,
+				8AE7DE0422483D9E00480EBB /* Nightmode.swift in Sources */,
 				8A632C502239C6FA00613978 /* About.swift in Sources */,
 				8A632C522239C70B00613978 /* Bookmarks.swift in Sources */,
 				8AF349A1223A1A490074334C /* LoadingScreen.swift in Sources */,
