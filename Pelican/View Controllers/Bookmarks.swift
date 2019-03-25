@@ -133,8 +133,15 @@ extension Bookmarks: UITableViewDataSource, UITableViewDelegate {
         // set index to pass into ArticleViewController
         index = indexes[indexPath.row]
         
-        // prepare() and load view
-        self.performSegue(withIdentifier: "segue3", sender: nil)
+        // prepare() and load view (Segue can only run once)
+        if UserDefaults.standard.object(forKey: "didClickHeadline") as! Bool != true {
+            UserDefaults.standard.set(true, forKey: "didClickHeadline")
+            self.performSegue(withIdentifier: "segue3", sender: nil)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                UserDefaults.standard.set(false, forKey: "didClickHeadline")
+            }
+        }
     }
 }
 

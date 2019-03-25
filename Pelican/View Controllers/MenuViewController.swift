@@ -112,7 +112,16 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
         }
         // Else, load new view by index
         else {
-            segue(index: indexPath.row)
+            
+            // Segue can only run once
+            if UserDefaults.standard.object(forKey: "didClickHeadline") as! Bool != true {
+                UserDefaults.standard.set(true, forKey: "didClickHeadline")
+                segue(index: indexPath.row)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    UserDefaults.standard.set(false, forKey: "didClickHeadline")
+                }
+            }
         }
     }
 }

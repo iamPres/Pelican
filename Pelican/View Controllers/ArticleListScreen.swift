@@ -173,8 +173,19 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         index = indexPath.row
         
-        // prepare() and load view
-        self.performSegue(withIdentifier: "segue2", sender: nil)
+        // prepare() and load view (Segue can only run once)
+        if UserDefaults.standard.object(forKey: "didClickHeadline") ==  nil {
+            UserDefaults.standard.set(false, forKey: "didClickHeadline")
+        }
+        
+        if UserDefaults.standard.object(forKey: "didClickHeadline") as! Bool != true {
+            UserDefaults.standard.set(true, forKey: "didClickHeadline")
+            self.performSegue(withIdentifier: "segue2", sender: nil)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                UserDefaults.standard.set(false, forKey: "didClickHeadline")
+            }
+        }
     }
     
     // this delegate is called when the scrollView (i.e your UITableView) will start scrolling
