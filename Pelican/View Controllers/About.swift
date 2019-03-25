@@ -9,22 +9,30 @@
 import UIKit
 
 class About: UIViewController {
-
+    @IBOutlet weak var author: UILabel!
+    @IBOutlet weak var authorname: UILabel!
+    @IBOutlet weak var date: UILabel!
+    @IBOutlet weak var inquiries: UILabel!
+    @IBOutlet weak var email: UILabel!
+    @IBOutlet weak var pelican: UILabel!
+    @IBOutlet weak var dateofpublication: UILabel!
+    @IBOutlet weak var header: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setConstraints()
+        
+        // Nightmode settings
+        SettingsTableViewController().changeColor(target: self, labels: [author,authorname,dateofpublication,date,inquiries,email,pelican])
+ 
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setConstraints(){
+        if UIScreen.main.fixedCoordinateSpace.bounds.height == 667 || UIScreen.main.fixedCoordinateSpace.bounds.height == 736{
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:50))
+        }
+        else {
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
+        }
     }
-    */
-
 }

@@ -6,6 +6,12 @@
 //  Copyright © 2019 Preston Willis. All rights reserved.
 //
 
+ /*
+ ArticleViewController loads / writes / purges article data
+ from storage based on bookmarked state. It also scrapes article content
+ from a URL passed from ArticleListScreen if not bookmarked.
+ */
+
 import UIKit
 import SwiftSoup
 import Alamofire
@@ -14,33 +20,138 @@ class ArticleViewController: UIViewController {
     
     @IBOutlet weak var article: UILabel!
     @IBOutlet weak var headline: UILabel!
-    @IBOutlet weak var frame: Frame!
-    @IBOutlet weak var scrollView: ScrollView!
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var frame: Frame! // Rounded article border
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var author: UILabel!
-    var url: URL? = nil
+    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var image: UIImageView!
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
+    
+    var data: Data? // Image data
+    var url: URL? = nil // URL to scrape
+    var count: Int = 0 // Article index for storing data
+    var result: [String] = [] // Contents of article
+    
+    @IBAction func buttonAction(_ sender: UIButton) {
+        
+        /*
+         When the bookmark button is pressed, load the corresponding image and log the article
+        contents to storage. If the page was already bookmarked, remove the contents from storage.
+         
+         - "bookmarkArray" holds an array of boolean values correcponding to the boolean bookmarked state of each page
+         - "html" holds the elements of each article
+         - "image" holds the raw data of each thumbnail image
+         */
+        
+        impact.impactOccurred()
+        
+        if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == true) {
+            if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == true) {
+                
+                self.button.setImage(#imageLiteral(resourceName: "bookmark-outline-white.png"), for: UIControl.State.normal)
+                
+                var array = UserDefaults.standard.array(forKey: "bookmarkArray") as? [Bool]
+                array![count] = false
+                UserDefaults.standard.set(array, forKey: "bookmarkArray")
+                UserDefaults.standard.set(nil, forKey: "html"+String(count))
+                UserDefaults.standard.set(nil, forKey: "image"+String(count))
+            }
+            else if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == false) {
+                
+                self.button.setImage(#imageLiteral(resourceName: "bookmark-outline.png"), for: UIControl.State.normal)
+                
+                var array: [Bool] = UserDefaults.standard.array(forKey: "bookmarkArray") as! [Bool]
+                array[count] = false
+                UserDefaults.standard.set(array, forKey: "bookmarkArray")
+                UserDefaults.standard.set(nil, forKey: "html"+String(count))
+                UserDefaults.standard.set(nil, forKey: "image"+String(count))
+            }
+        }
+        else if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == false) {
+            if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == true) {
+                
+                self.button.setImage(#imageLiteral(resourceName: "image.png"), for: UIControl.State.normal)
+                
+                var array = UserDefaults.standard.array(forKey: "bookmarkArray") as? [Bool]
+                array![count] = true
+                UserDefaults.standard.set(array, forKey: "bookmarkArray")
+                UserDefaults.standard.set(result, forKey: "html"+String(count))
+                UserDefaults.standard.set(data, forKey: "image"+String(count))
+            }
+            else if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == false) {
+                
+                self.button.setImage(#imageLiteral(resourceName: "bookmark.png"), for: UIControl.State.normal)
+                
+                var array = UserDefaults.standard.array(forKey: "bookmarkArray") as? [Bool]
+                array![count] = true
+                UserDefaults.standard.set(array, forKey: "bookmarkArray")
+                UserDefaults.standard.set(result, forKey: "html"+String(count))
+                UserDefaults.standard.set(data, forKey: "image"+String(count))
+            }
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setNightMode()
+        
+        // If the page is bookmarked, load contents from storage
+        if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == true && UserDefaults.standard.object(forKey: "image"+String(count)) != nil) {
+            result = UserDefaults.standard.array(forKey: "html"+String(count)) as! [String]
+            
+            headline.text = result[0]
+            article.text = result[1]
+            date.text = result[2]
+            author.text = result[3]
+            image.image = UIImage(data: UserDefaults.standard.object(forKey: "image"+String(count)) as! Data)
+    
+            format()
+            setButton()
+        }
+            
+        // Else, scrape content from the web
+        else {
+            loadContent()
+        }
+    }
+    
+    func setNightMode(){
+        // Nightmode settings
+        if SettingsTableViewController().changeColor(target: self, labels: [article, headline, date, author]) {
+            frame.backgroundColor = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
+        }
+        else {
+            frame.backgroundColor = UIColor.white
+        }
+    }
+    
+    func loadContent() {
+        
+        // Init. static array
+        for _ in 0...4 {
+            result.append("")
+        }
+
+        // Alamofire completion handler (Separate thread)
         parseHTML() { result in
             var attribute: String = ""
             do{
+                // Load attribute by tag with SwiftSoup
                 let doc: Document = try SwiftSoup.parse(result)
                 try attribute = doc.getElementsByTag("img").attr("src")
                 NSLog(attribute)
             }catch{
                 NSLog("None")
             }
+            // Load image (Separate thread)
             self.getData(from: URL.init(string: attribute)!) { data, response, error  in
-                self.image.contentMode = .scaleAspectFit
+                self.data = data
                 self.image.image = UIImage(data: data!)
             }
-        }
-        
-        parseHTML() { result in
-            var attribute: String = ""
+            
             do{
                 let doc: Document = try SwiftSoup.parse(result)
                 try attribute = doc.getElementsByClass("post-headline ").text()
@@ -49,10 +160,8 @@ class ArticleViewController: UIViewController {
                 NSLog("None")
             }
             self.headline.text = attribute
-        }
-        
-        parseHTML() { result in
-            var attribute: String = ""
+            self.result[0] = attribute
+            
             do{
                 let doc: Document = try SwiftSoup.parse(result)
                 try attribute = doc.getElementsByClass("post-content typography ").text()
@@ -60,16 +169,13 @@ class ArticleViewController: UIViewController {
             }catch{
                 NSLog("None")
             }
+            
             self.article.text = attribute
-            self.article.sizeToFit()
+            self.result[1] = attribute
             
-            self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.article.frame.size.height+self.headline.frame.size.height+200))
+            self.setButton()
+            self.format()
             
-            self.scrollView.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:self.article.frame.size.height+self.headline.frame.size.height+self.image.frame.height+200))
-        }
-        
-        parseHTML() { result in
-            var attribute: String = ""
             do{
                 let doc: Document = try SwiftSoup.parse(result)
                 try attribute = doc.getElementsByClass("byline-timestamp").text()
@@ -78,10 +184,8 @@ class ArticleViewController: UIViewController {
                 NSLog("None")
             }
             self.date.text = attribute
-        }
-        
-        parseHTML() { result in
-            var attribute: String = ""
+            self.result[2] = attribute
+            
             do{
                 let doc: Document = try SwiftSoup.parse(result)
                 try attribute = doc.getElementsByClass("byline-link byline-author-name").text()
@@ -90,18 +194,60 @@ class ArticleViewController: UIViewController {
                 NSLog("None")
             }
             self.author.text = attribute
+            self.result[3] = attribute
         }
         
     }
     
+    // Set constraints
+    func format () {
+        self.article.sizeToFit()
+        
+        // Width == screen width
+          self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width))
+        
+        // Width == screen width
+        self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width))
+        
+        // Image height == 1/3 screen height
+        self.image.addConstraint(NSLayoutConstraint(item: self.image, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/3))
+        
+        // Scroll View content == article + headline + constant
+        self.scrollView.contentSize = CGSize(width: 375, height: self.article.frame.size.height+self.headline.frame.size.height+150)
+        
+        // Frame height == Scroll View content size
+        self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:self.article.frame.size.height+self.headline.frame.size.height+150))
+    }
+    
+    // Set button state on load (Load corresponding image)
+    func setButton() {
+        if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == true) {
+            if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == true) {
+                self.button.setImage(#imageLiteral(resourceName: "image.png"), for: UIControl.State.normal)
+            }
+            else if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == false) {
+                self.button.setImage(#imageLiteral(resourceName: "bookmark.png"), for: UIControl.State.normal)
+            }
+        }
+        else if (UserDefaults.standard.array(forKey: "bookmarkArray")![count] as! Bool == false) {
+            if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == true) {
+                self.button.setImage(#imageLiteral(resourceName: "bookmark-outline-white.png"), for: UIControl.State.normal)
+            }
+            else if (UserDefaults.standard.object(forKey: "nightmode") as! Bool == false) {
+                self.button.setImage(#imageLiteral(resourceName: "bookmark-outline.png"), for: UIControl.State.normal)
+            }
+        }
+    }
+    
+    // Download image data
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     
+    // Download html
     func parseHTML( completionHandler: @escaping (String) -> Void){
         Alamofire.request(url!).responseString { response in
             if let html: String = response.result.value {
-                //NSLog(html)
                 completionHandler(html)
             }
         }

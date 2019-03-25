@@ -18,19 +18,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="LOGO.png" translatesAutoresizingMaskIntoConstraints="NO" id="hbs-ef-Lwf">
-                                <rect key="frame" x="67" y="269" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-dark.png" translatesAutoresizingMaskIntoConstraints="NO" id="hbs-ef-Lwf">
+                                <rect key="frame" x="67.5" y="169.5" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="ahi-4j-jEp"/>
+                                    <constraint firstAttribute="height" constant="128" id="isb-t9-SM3"/>
+                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="The Pelican" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxM-vh-m93">
-                                <rect key="frame" x="112" y="227" width="151" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Pelican" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxM-vh-m93">
+                                <rect key="frame" x="112" y="127" width="151" height="34"/>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hbs-ef-Lwf" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="FFK-oX-9Tg"/>
+                            <constraint firstItem="hbs-ef-Lwf" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-100" id="PjQ-eh-jh4"/>
+                            <constraint firstItem="hbs-ef-Lwf" firstAttribute="top" secondItem="dxM-vh-m93" secondAttribute="bottom" constant="8.5" id="cft-fc-kde"/>
+                            <constraint firstItem="dxM-vh-m93" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="fyF-xa-c5x"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -40,6 +48,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LOGO.png" width="400" height="400"/>
+        <image name="logo-dark.png" width="400" height="400"/>
     </resources>
 </document>

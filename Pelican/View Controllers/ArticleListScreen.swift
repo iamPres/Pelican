@@ -6,17 +6,35 @@
 //  Copyright © 2019 Preston Willis. All rights reserved.
 //
 
+/*
+ ArticleListViewController lists article previews. It also loads the corresponding view upon
+ cell selection and passes data to ArticleViewContoller
+ */
+
 import UIKit
 import SwiftSoup
 import Alamofire
 
 class ArticleListScreen: UIViewController {
-    
-    var index: Int = 0
+    @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var label: UILabel!
-    var titles: [String] = ["","","","","",""]
-    var images: [UIImage] = [#imageLiteral(resourceName: "polititian.jpg"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "outside-page.png")]
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var errorImage: UIImageView!
+    @IBOutlet weak var header: UIView!
+    
+    let notification = UINotificationFeedbackGenerator()
+    let selection = UISelectionFeedbackGenerator()
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
+    
+    var index: Int = 0 // Index of selected cell to pass into ArticleViewController
+    var titles: [String] = [] // Article titles
+    var images: [UIImage] = [] // Article thumbnails
     var loaded: Int = 0
+    var lastContentOffset: CGFloat = 0 // Set a variable to hold the contentOffSet before scroll view scrolls
+    
+    var isReady: Bool = true
+    
+    // URLS to scrape
     let url: [URL] = [URL(string: "https://www.businessinsider.com/amazon-web-services-open-source-elasticsearch-2019-3")!,
                       URL(string: "https://www.businessinsider.com/zero-electric-motorcycle-brings-connectivity-race-for-e-bikes-2019-3")!,
                       URL(string: "https://www.businessinsider.com/lyft-ipo-public-s-1-filing-details-2019-2")!,
@@ -26,79 +44,150 @@ class ArticleListScreen: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+
+        setErrorView()
+        setNightView()
+        setConstraints()
     }
     
+    // Set ArticleViewController attributes before loading view
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        impact.impactOccurred()
+        if segue.destination.title == "ArticleViewController" {
+            let vc = segue.destination as! ArticleViewController
+            vc.url = url[index]
+            vc.count = index
+        }
+    }
+        
+    func setNightView() {
+        // Nightmode settings
+        if SettingsTableViewController().changeColor(target: self, labels: [label,errorLabel]) {
+            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
+            menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines-white.png"), for: UIControl.State.normal)
+        }
+        else {
+            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().lightColor
+            menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines.png"), for: UIControl.State.normal)
+        }
+    }
+    
+    func setErrorView(){
+        //Constraints
+        self.errorLabel.addConstraint(NSLayoutConstraint(item: self.errorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width-200))
+        
+        //Error Label
+        errorLabel.text = ""
+        errorImage.image = #imageLiteral(resourceName: "output-onlinepngtools.png")
+        
+        if (UserDefaults.standard.object(forKey: "timedout") as! Bool){
+            errorImage.image = #imageLiteral(resourceName: "white-buttons-png-8.png")
+            errorLabel.text = "Unable to locate this rescource."
+        }
+    }
+    
+    func setConstraints(){
+        if UIScreen.main.fixedCoordinateSpace.bounds.height == 667 || UIScreen.main.fixedCoordinateSpace.bounds.height == 736{
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:50))
+        }
+        else {
+            self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
+        }
+    }
+    
+    // Download image data
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     
+    // Download article contents
     func parseHTML(index: Int, completionHandler: @escaping (String) -> Void){
         Alamofire.request(url[index]).responseString { response in
             if let html: String = response.result.value {
-                //NSLog(html)
                 completionHandler(html)
             }
         }
     }
 }
 
+// UITableView Init.
 extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
-
+    
+    // Set number of rows to generate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        DispatchQueue.main.async() {
-            tableView.reloadData()
-        }
         return url.count
     }
     
+    // Set ArticleCell attributes for each cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        // Init. new cell as ArticleCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell") as! ArticleCell
-        if(indexPath.row == 0){
-            tableView.rowHeight = 90
-            tableView.separatorStyle = .singleLine
-            //cell.titleLabel.addConstraint(NSLayoutConstraint(item: cell.titleLabel, attribute: .bottom, relatedBy: .equal, toItem: cell, attribute: .bottom, multiplier: 1, constant: 0))
+        
+        // Set table attributes
+        tableView.rowHeight = 90
+        tableView.separatorStyle = .singleLine
+        
+        // Make the table disappear if timed out
+        if (indexPath.row == url.count-1){
+            tableView.separatorStyle = .none
         }
-        else if (indexPath.row == 1){
-            tableView.rowHeight = 90
+        
+        if UserDefaults.standard.object(forKey: "timedout") as! Bool {
+            tableView.isHidden = true
         }
-        else{
-            tableView.rowHeight = 90
+        else {
+            tableView.isHidden = false
         }
+        
+        
+        // Make sure everything only loads once
         if loaded < url.count {
             loaded += 1
-            parseHTML(index: indexPath.row) { result in
-                var attribute: String = ""
-                do{
-                    let doc: Document = try SwiftSoup.parse(result)
-                    try attribute = doc.getElementsByClass("post-headline ").text()
-                    NSLog("NEW SHIT: "+attribute)
-                }catch{
-                    NSLog("None")
-                }
-                self.titles[indexPath.row] = attribute
-            cell.titleLabel.text = self.titles[indexPath.row]
-                do{
-                    let doc: Document = try SwiftSoup.parse(result)
-                    try attribute = doc.getElementsByTag("img").attr("src")
-                    NSLog(attribute)
-                }catch{
-                    NSLog("None")
-                }
-                self.getData(from: URL.init(string: attribute)!) { data, response, error  in
-                    cell.thumbnail.contentMode = .scaleAspectFit
-                    cell.thumbnail.image = UIImage(data: data!)
-                }
-            }
+            cell.thumbnail.contentMode = .scaleAspectFit
+            
+            // Load corresponding cell attributes from storage as set in LoadingScreen
+            cell.thumbnail.image = UIImage(data: (UserDefaults.standard.array(forKey: "images")![indexPath.row] as! NSData) as Data)
+            cell.titleLabel.text = UserDefaults.standard.array(forKey: "titles")![indexPath.row] as? String
         }
+        
+       
+        
+        // Nightmode settings
+        if SettingsTableViewController().changeColor(target: self, labels: [cell.titleLabel]) {
+            cell.backgroundColor = SettingsTableViewController().darkBackground
+            tableView.separatorColor = UIColor.darkGray
+        }
+        else {
+            cell.backgroundColor = SettingsTableViewController().lightColor
+            tableView.separatorColor = UIColor.lightGray
+        }
+        
         return cell
     }
     
+    // Handle row selection
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ArticleViewController") as? ArticleViewController
-        vc?.url = url[indexPath.row]
-        self.navigationController?.pushViewController(vc!, animated: true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        NSLog("SELECTED"+String(indexPath.row))
+        index = indexPath.row
+        
+        // prepare() and load view
+        self.performSegue(withIdentifier: "segue2", sender: nil)
+    }
+    
+    // this delegate is called when the scrollView (i.e your UITableView) will start scrolling
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.lastContentOffset = scrollView.contentOffset.y
+    }
+    
+    // while scrolling this delegate is being called so you may now check which direction your scrollView is being scrolled to
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if (self.lastContentOffset > scrollView.contentOffset.y+50 && scrollView.scrollsToTop && scrollView.isDecelerating && self.isReady) {
+                notification.notificationOccurred(.error)
+                self.performSegue(withIdentifier: "load", sender: nil)
+                self.isReady = false
+        }
     }
 }
 
