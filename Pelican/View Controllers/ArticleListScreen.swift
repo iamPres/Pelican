@@ -119,7 +119,6 @@ class ArticleListScreen: UIViewController {
         let imageHeight = image!.size.height
         
         cell.thumbnail.image = image
-        
         cell.thumbnail.addConstraint(NSLayoutConstraint(item: cell.thumbnail, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: UIScreen.main.bounds.width-16))
         
         cell.thumbnail.addConstraint(NSLayoutConstraint(item: cell.thumbnail, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: (UIScreen.main.bounds.width-16) * imageHeight / imageWidth))
@@ -251,7 +250,7 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
     // while scrolling this delegate is being called so you may now check which direction your scrollView is being scrolled to
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        if (self.lastContentOffset > scrollView.contentOffset.y+50 && scrollView.scrollsToTop && scrollView.isDecelerating && self.isReady) {
+        if (scrollView.contentOffset.y < -75 && self.lastContentOffset > scrollView.contentOffset.y && scrollView.scrollsToTop && scrollView.isDecelerating && self.isReady) {
                 notification.notificationOccurred(.error)
                 self.performSegue(withIdentifier: "load", sender: nil)
                 self.isReady = false

@@ -76,12 +76,14 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
             tableView.separatorStyle = .none
         }
         else {
-        tableView.separatorStyle = .singleLine
+            tableView.separatorStyle = .singleLine
         }
         
         // Generate new cell as MenuCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell") as! MenuCell
         cell.label.text = titles[indexPath.row]
+        
+        cell.selectionStyle = .none
         
         // Nightmode settings
         if UserDefaults.standard.object(forKey: "nightmode") as! Bool{

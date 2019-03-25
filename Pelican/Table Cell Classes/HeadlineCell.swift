@@ -11,12 +11,11 @@ import UIKit
 class HeadlineCell: UITableViewCell {
     
     @IBOutlet weak var thumbnail: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.selectionStyle = .none
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
