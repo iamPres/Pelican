@@ -1,23 +1,24 @@
 //
-//  ArticleCell.swift
+//  HeadlineCell.swift
 //  Pelican
 //
-//  Created by Preston Willis on 3/9/19.
+//  Created by Preston Willis on 3/25/19.
 //  Copyright © 2019 Preston Willis. All rights reserved.
 //
 
 import UIKit
 
-class ArticleCell: UITableViewCell {
+class HeadlineCell: UITableViewCell {
     
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

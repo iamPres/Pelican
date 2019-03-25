@@ -97,7 +97,63 @@ class ArticleListScreen: UIViewController {
         }
     }
     
-    func loadCellAttributes(cell: ArticleCell, tableView: UITableView, index: Int) {
+    func loadHeadlineCellAttributes(cell: HeadlineCell, tableView: UITableView) -> HeadlineCell{
+    
+        tableView.separatorStyle = .singleLine
+        tableView.isHidden = false
+        
+        // Nightmode settings
+        if Nightmode_class.changeColor(target: self, labels: []) {
+            cell.backgroundColor = Nightmode_class.darkBackground
+            tableView.separatorColor = Nightmode_class.darkSeparator
+        }
+        else {
+            cell.backgroundColor = Nightmode_class.lightColor
+            tableView.separatorColor = Nightmode_class.lightSeparator
+        }
+        
+        // Load corresponding cell attributes from storage as set in LoadingScreen
+        //cell.thumbnail.contentMode = .scaleAspectFill
+        let image = UIImage(data: (UserDefaults.standard.array(forKey: "images")![0] as! NSData) as Data)
+        let imageWidth = image!.size.width
+        let imageHeight = image!.size.height
+        
+        cell.thumbnail.image = image
+        
+        cell.thumbnail.addConstraint(NSLayoutConstraint(item: cell.thumbnail, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: UIScreen.main.bounds.width-16))
+        
+        cell.thumbnail.addConstraint(NSLayoutConstraint(item: cell.thumbnail, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: (UIScreen.main.bounds.width-16) * imageHeight / imageWidth))
+        
+        tableView.rowHeight = (UIScreen.main.bounds.width-16) * imageHeight / imageWidth
+        
+        return cell
+    }
+    
+    func loadHeadlineTextCellAttributes(cell: HeadlineTextCell, tableView: UITableView) -> HeadlineTextCell{
+        
+        tableView.separatorStyle = .singleLine
+        tableView.isHidden = false
+        
+        // Nightmode settings
+        if Nightmode_class.changeColor(target: self, labels: []) {
+            cell.backgroundColor = Nightmode_class.darkBackground
+            tableView.separatorColor = Nightmode_class.darkSeparator
+        }
+        else {
+            cell.backgroundColor = Nightmode_class.lightColor
+            tableView.separatorColor = Nightmode_class.lightSeparator
+        }
+        
+        cell.headlineTextLabel.text = UserDefaults.standard.array(forKey: "titles")![1] as? String
+        
+        cell.headlineTextLabel.sizeToFit()
+        tableView.rowHeight = cell.headlineTextLabel.frame.size.height + 28
+        
+        return cell
+        
+    }
+    
+    func loadArticleCellAttributes(cell: ArticleCell, tableView: UITableView, index: Int) -> ArticleCell {
         
         // Set table attributes
         tableView.rowHeight = 90
@@ -119,10 +175,7 @@ class ArticleListScreen: UIViewController {
         cell.thumbnail.image = UIImage(data: (UserDefaults.standard.array(forKey: "images")![index] as! NSData) as Data)
         cell.titleLabel.text = UserDefaults.standard.array(forKey: "titles")![index] as? String
         
-        // Make the table disappear if timed out
-        if (index == url.count-1){
-            tableView.separatorStyle = .none
-        }
+        return cell
     }
     
     // Download image data
@@ -145,39 +198,41 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
     
     // Set number of rows to generate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return url.count
+        return url.count + 1
     }
     
     // Set ArticleCell attributes for each cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        // Init. new cell as ArticleCell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell") as! ArticleCell
-        
-        // Make sure everything only loads once
-        if loaded < url.count {
-            loaded += 1
+    
+        // Init. new cell
+        let articleCell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell") as? ArticleCell
+        let headlineCell = tableView.dequeueReusableCell(withIdentifier: "HeadlineCell") as? HeadlineCell
+        let headlineTextCell = tableView.dequeueReusableCell(withIdentifier: "HeadlineTextCell") as? HeadlineTextCell
             
             if UserDefaults.standard.object(forKey: "timedout") as! Bool {
                 tableView.isHidden = true
             }
             else {
-                loadCellAttributes(cell: cell, tableView: tableView, index: indexPath.row)
+                if indexPath.row == 0 {
+                    return loadHeadlineCellAttributes(cell: headlineCell!, tableView: tableView)
+                } else if indexPath.row == 1{
+                    return loadHeadlineTextCellAttributes(cell: headlineTextCell!, tableView: tableView)
+                }else {
+                    return loadArticleCellAttributes(cell: articleCell!, tableView: tableView, index: indexPath.row-1)
+                }
             }
-        }
-        
-        return cell
+        return articleCell!
     }
     
     // Handle row selection
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        index = indexPath.row
-        
-        // prepare() and load view (Segue can only run once)
-        if UserDefaults.standard.object(forKey: "didClickHeadline") ==  nil {
-            UserDefaults.standard.set(false, forKey: "didClickHeadline")
+        if indexPath.row == 1 || indexPath.row == 0 {
+            index = 0
+        } else {
+            index = indexPath.row - 1
         }
         
+        // prepare() and load view (Segue can only run once        
         if UserDefaults.standard.object(forKey: "didClickHeadline") as! Bool != true {
             UserDefaults.standard.set(true, forKey: "didClickHeadline")
             self.performSegue(withIdentifier: "segue2", sender: nil)

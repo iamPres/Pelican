@@ -134,6 +134,7 @@ class LoadingScreen: UIViewController {
     }
     
     func initData() {
+        UserDefaults.standard.set(false, forKey: "didClickHeadline")
         UserDefaults.standard.set(false, forKey: "isSegued")
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
