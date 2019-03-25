@@ -30,6 +30,7 @@ class ArticleViewController: UIViewController {
     let impact = UIImpactFeedbackGenerator(style: .heavy)
     let Nightmode_class = Nightmode()
     
+    let indent = "      "
     var data: Data? // Image data
     var url: URL? = nil // URL to scrape
     var count: Int = 0 // Article index for storing data
@@ -105,7 +106,7 @@ class ArticleViewController: UIViewController {
             result = UserDefaults.standard.array(forKey: "html"+String(count)) as! [String]
             
             headline.text = result[0]
-            article.text = result[1]
+            article.text = indent+result[1]
             date.text = result[2]
             author.text = result[3]
             image.image = UIImage(data: UserDefaults.standard.object(forKey: "image"+String(count)) as! Data)
@@ -172,7 +173,7 @@ class ArticleViewController: UIViewController {
                 NSLog("None")
             }
             
-            self.article.text = attribute
+            self.article.text = self.indent+attribute
             self.result[1] = attribute
             
             self.setButton()
