@@ -135,7 +135,7 @@ class ArticleListScreen: UIViewController {
         tableView.isHidden = false
         
         // Nightmode settings
-        if Nightmode_class.changeColor(target: self, labels: []) {
+        if Nightmode_class.changeColor(target: self, labels: [cell.headlineTextLabel]) {
             cell.backgroundColor = Nightmode_class.darkBackground
             tableView.separatorColor = Nightmode_class.darkSeparator
         }
