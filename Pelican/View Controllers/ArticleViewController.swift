@@ -26,8 +26,11 @@ class ArticleViewController: UIViewController {
     @IBOutlet weak var author: UILabel!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var image: UIImageView!
-    let impact = UIImpactFeedbackGenerator(style: .heavy)
     
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
+    let Nightmode_class = Nightmode()
+    
+    let indent = "      "
     var data: Data? // Image data
     var url: URL? = nil // URL to scrape
     var count: Int = 0 // Article index for storing data
@@ -103,7 +106,7 @@ class ArticleViewController: UIViewController {
             result = UserDefaults.standard.array(forKey: "html"+String(count)) as! [String]
             
             headline.text = result[0]
-            article.text = result[1]
+            article.text = indent+result[1]
             date.text = result[2]
             author.text = result[3]
             image.image = UIImage(data: UserDefaults.standard.object(forKey: "image"+String(count)) as! Data)
@@ -120,11 +123,11 @@ class ArticleViewController: UIViewController {
     
     func setNightMode(){
         // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [article, headline, date, author]) {
-            frame.backgroundColor = UIColor(red: 0.1,green: 0.0,blue: 0.1,alpha: 1.0)
+        if Nightmode_class.changeColor(target: self, labels: [article, headline, date, author]) {
+            frame.backgroundColor = Nightmode_class.darkBackground
         }
         else {
-            frame.backgroundColor = UIColor.white
+            frame.backgroundColor = Nightmode_class.lightColor
         }
     }
     
@@ -154,7 +157,7 @@ class ArticleViewController: UIViewController {
             
             do{
                 let doc: Document = try SwiftSoup.parse(result)
-                try attribute = doc.getElementsByClass("post-headline ").text()
+                try attribute = doc.getElementsByClass("tagdiv-entry-title").text()
                 NSLog("NEW SHIT: "+attribute)
             }catch{
                 NSLog("None")
@@ -164,13 +167,13 @@ class ArticleViewController: UIViewController {
             
             do{
                 let doc: Document = try SwiftSoup.parse(result)
-                try attribute = doc.getElementsByClass("post-content typography ").text()
+                try attribute = doc.getElementsByClass("tagdiv-post-content").text()
                 NSLog("NEW SHIT: "+attribute)
             }catch{
                 NSLog("None")
             }
             
-            self.article.text = attribute
+            self.article.text = self.indent+attribute
             self.result[1] = attribute
             
             self.setButton()
@@ -178,7 +181,7 @@ class ArticleViewController: UIViewController {
             
             do{
                 let doc: Document = try SwiftSoup.parse(result)
-                try attribute = doc.getElementsByClass("byline-timestamp").text()
+                try attribute = doc.getElementsByClass("entry-date updated").text()
                 NSLog("NEW SHIT: "+attribute)
             }catch{
                 NSLog("None")
@@ -188,7 +191,7 @@ class ArticleViewController: UIViewController {
             
             do{
                 let doc: Document = try SwiftSoup.parse(result)
-                try attribute = doc.getElementsByClass("byline-link byline-author-name").text()
+                try attribute = doc.getElementsByClass("tagdiv-post-author-url fn").text()
                 NSLog("NEW SHIT: "+attribute)
             }catch{
                 NSLog("None")
@@ -201,7 +204,16 @@ class ArticleViewController: UIViewController {
     
     // Set constraints
     func format () {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        //line height size
+        paragraphStyle.lineSpacing = 5
+        let attrString = NSMutableAttributedString(string: article.text!)
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        article.attributedText = attrString
+        
         self.article.sizeToFit()
+        self.headline.sizeToFit()
         
         // Width == screen width
           self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width))
@@ -209,14 +221,17 @@ class ArticleViewController: UIViewController {
         // Width == screen width
         self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width))
         
+        // Image height == aspect fit
+        //self.image.addConstraint(NSLayoutConstraint(item: self.image, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.width * (self.image.image?.size.height)! / (self.image.image?.size.width)!))
+        
         // Image height == 1/3 screen height
-        self.image.addConstraint(NSLayoutConstraint(item: self.image, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/3))
+        self.image.addConstraint(NSLayoutConstraint(item: self.image, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: UIScreen.main.bounds.size.height/3))
         
         // Scroll View content == article + headline + constant
-        self.scrollView.contentSize = CGSize(width: 375, height: self.article.frame.size.height+self.headline.frame.size.height+150)
+        self.scrollView.contentSize = CGSize(width: 375, height: self.article.frame.size.height+self.headline.frame.size.height+200)
         
         // Frame height == Scroll View content size
-        self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:self.article.frame.size.height+self.headline.frame.size.height+150))
+        self.frame.addConstraint(NSLayoutConstraint(item: self.frame, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:self.article.frame.size.height+self.headline.frame.size.height+200))
     }
     
     // Set button state on load (Load corresponding image)

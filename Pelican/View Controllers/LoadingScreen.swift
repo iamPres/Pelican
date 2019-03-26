@@ -22,6 +22,8 @@ class LoadingScreen: UIViewController {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var header: UIView!
     
+    let Nightmode_class = Nightmode()
+    let ArticleListScreen_class = ArticleListScreen()
     let notification = UINotificationFeedbackGenerator()
     var images: [Data?] = [] // ArticleListScreen thumbnail images
     var titles: [String] = [] // ArticleListScreen titles
@@ -30,64 +32,50 @@ class LoadingScreen: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserDefaults.standard.set(false, forKey: "isSegued")
-        UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
-        // Init. Nightmode state
-        if (UserDefaults.standard.object(forKey: "nightmode") == nil) {
-            UserDefaults.standard.set(false, forKey: "nightmode")
-        }
+        initData() // Init storage values
         
-        setNightView()
-        setConstraints()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        // Download all data (Multithreading..)
         if UserDefaults.standard.object(forKey: "isSegued") as! Bool != true {
             UserDefaults.standard.set(true, forKey: "isSegued")
             
-            // Init. ArticleListScreen
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ArticleListScreen") as? ArticleListScreen
+            nightmodeSettings() // Nightmode settings
+            setConstraints() // Set constraints
             
-            // Init. ArticleListScreen thumbnail and title matrices
-            for _ in 0..<((vc?.url.count)!) {
-                images.append(nil)
-                titles.append("")
-            }
-            
-            for i in 0..<((vc?.url.count)!) {
-                vc?.parseHTML(index: i) { result in
-                    
-                    // Retreive titles
-                    var attribute: String = ""
-                    do{
-                        let doc: Document = try SwiftSoup.parse(result)
-                        try attribute = doc.getElementsByClass("post-headline ").text()
-                        NSLog("Loaded attribute: "+String(i))
-                    }catch{
-                        NSLog("None")
-                    }
-                    self.titles[i] = attribute
-                    
-                    // Retreive image data
-                    do{
-                        let doc: Document = try SwiftSoup.parse(result)
-                        try attribute = doc.getElementsByTag("img").attr("src")
-                        NSLog("     Image: "+String(i))
-                    }catch{
-                        NSLog("None")
-                    }
-                    vc?.getData(from: URL.init(string: attribute)!) { data, response, error  in
-                        self.images[i] = data!
-                   }
-                }
-            }
-             test()
+            downloadData() // Download all data (Multithreading..)
+            test() // Test to see if data is downloaded
         }
         
         // Check to see if all content is downloaded
+    }
+    
+    func downloadData() {
+        for i in 0..<(ArticleListScreen_class.url.count) {
+            ArticleListScreen_class.parseHTML(index: i) { result in
+                
+                // Retreive titles
+                var attribute: String = ""
+                do{
+                    let doc: Document = try SwiftSoup.parse(result)
+                    try attribute = doc.getElementsByClass("tagdiv-entry-title").text()
+                    NSLog("Loaded attribute: "+String(i))
+                }catch{
+                    NSLog("None")
+                }
+                self.titles[i] = attribute
+                
+                // Retreive image data
+                do{
+                    let doc: Document = try SwiftSoup.parse(result)
+                    try attribute = doc.getElementsByTag("img").attr("src")
+                    NSLog("     Image: "+String(i))
+                }catch{
+                    NSLog("None")
+                }
+                self.ArticleListScreen_class.getData(from: URL.init(string: attribute)!) { data, response, error  in
+                    self.images[i] = data!
+                }
+            }
+        }
     }
     
     func test(){
@@ -105,6 +93,7 @@ class LoadingScreen: UIViewController {
                     //If all content loaded, proceed to prepare(), else test()
                     NSLog(" ---------------------------- ")
                     NSLog(" All attributes loaded.. Prepare to segue." )
+                    
                     self.performSegue(withIdentifier: "segue1", sender: nil)
                 }
             }
@@ -120,17 +109,17 @@ class LoadingScreen: UIViewController {
         }
     }
     
-    func setNightView(){
+    func nightmodeSettings(){
         // Nightmode setings
         NSLog("ran")
-        if SettingsTableViewController().changeColor(target: self, labels: [label]) {
+        if Nightmode_class.changeColor(target: self, labels: [label]) {
             loading.color = UIColor.white
-            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().darkBackground
+            self.view.viewWithTag(2)?.backgroundColor = Nightmode_class.darkBackground
             menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines-white.png"), for: UIControl.State.normal)
         }
         else {
             loading.color = UIColor.black
-            self.view.viewWithTag(2)?.backgroundColor = SettingsTableViewController().lightColor
+            self.view.viewWithTag(2)?.backgroundColor = Nightmode_class.lightColor
             menuButton.setImage(#imageLiteral(resourceName: "menu-button-of-three-horizontal-lines.png"), for: UIControl.State.normal)
         }
     }
@@ -143,42 +132,44 @@ class LoadingScreen: UIViewController {
             self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:UIScreen.main.fixedCoordinateSpace.bounds.height*1/10))
         }
     }
-
-    // Called before ArticleListScreen loads
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
+    func initData() {
+        UserDefaults.standard.set(false, forKey: "didClickHeadline")
+        UserDefaults.standard.set(false, forKey: "isSegued")
+        UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
-        let vc = segue.destination as! ArticleListScreen
-        var imageData: [NSData] = []
-        
-        // If everything loaded, set attributes. Else, present nothing.
-        if UserDefaults.standard.object(forKey: "timedout") as! Bool == false{
-            
-             NSLog(" ---------------------------- ")
-            
-            for i in 0..<(vc.url.count) {
-                imageData.append(images[i] as! NSData)
-            }
-        }
-        else {
-            for _ in 0..<(vc.url.count) {
-                imageData.append(#imageLiteral(resourceName: "output-onlinepngtools.png").pngData()! as NSData)
-            }
+        // Init. Nightmode state
+        if (UserDefaults.standard.object(forKey: "nightmode") == nil) {
+            UserDefaults.standard.set(false, forKey: "nightmode")
         }
         
         // If bookmark state matrix doesnt exist, make it
         if (UserDefaults.standard.array(forKey: "bookmarkArray") == nil) {
-        var array: [Bool] = []
-            for _ in 0..<(vc.url.count) {
-                    // Set all bookmarks to false
-                    array.append(false)
+            var array: [Bool] = []
+            for _ in 0..<(ArticleListScreen_class.url.count) {
+                // Set all bookmarks to false
+                array.append(false)
             }
-        // Save bookmark matrix to storage
+            // Save bookmark matrix to storage
             UserDefaults.standard.set(array, forKey: "bookmarkArray")
         }
+        
+        // Init. ArticleListScreen thumbnail and title matrices
+        for _ in 0..<(ArticleListScreen_class.url.count) {
+            images.append(nil)
+            titles.append("")
+        }
+
+    }
+
+    // Called before ArticleListScreen loads
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
         // Save titles and thumbnails to storage
-        UserDefaults.standard.set(imageData, forKey: "images")
-        UserDefaults.standard.set(self.titles, forKey: "titles")
-        UserDefaults.standard.synchronize()
+        if UserDefaults.standard.object(forKey: "timedout") as! Bool == false {
+            UserDefaults.standard.set(titles, forKey: "titles")
+            UserDefaults.standard.set(images, forKey: "images")
+        }
         
         notification.notificationOccurred(.success)
     }

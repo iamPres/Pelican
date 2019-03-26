@@ -14,19 +14,23 @@ import UIKit
 
 
 class MenuViewController: UIViewController {
+    
+    @IBOutlet weak var header: UIView!
+    @IBOutlet weak var pelican: UILabel!
+    
     let titles: [String] = ["Previous Issues", "Bookmarks", "Settings", "Website", "About"] // Cell titles
     var images: [UIImage] = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")] // Cell thumbnails
-    let impact = UIImpactFeedbackGenerator(style: .heavy)
-    @IBOutlet weak var header: UIView!
     
-    @IBOutlet weak var pelican: UILabel!
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
+    let Nightmode_class = Nightmode()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setConstraints()
         
         // Nightmode settings
-        SettingsTableViewController().changeColor(target: self, labels: [pelican])
+        Nightmode_class.changeColor(target: self, labels: [pelican])
     }
     
     // Load new view and transition with animation
@@ -47,7 +51,7 @@ class MenuViewController: UIViewController {
     }
     
     func setConstraints(){
-        if UIScreen.main.fixedCoordinateSpace.bounds.height == 667 || UIScreen.main.fixedCoordinateSpace.bounds.height == 736{
+        if UIScreen.main.fixedCoordinateSpace.bounds.height == 667 || UIScreen.main.fixedCoordinateSpace.bounds.height == 736 {
             self.header.addConstraint(NSLayoutConstraint(item: self.header, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant:50))
         }
         else {
@@ -72,27 +76,30 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
             tableView.separatorStyle = .none
         }
         else {
-        tableView.separatorStyle = .singleLine
+            tableView.separatorStyle = .singleLine
         }
         
         // Generate new cell as MenuCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell") as! MenuCell
         cell.label.text = titles[indexPath.row]
         
+        cell.selectionStyle = .none
+        
         // Nightmode settings
         if UserDefaults.standard.object(forKey: "nightmode") as! Bool{
-            cell.backgroundColor = SettingsTableViewController().darkBackground
-            cell.label.textColor = SettingsTableViewController().lightColor
-            tableView.separatorColor = UIColor.darkGray
+            cell.backgroundColor = Nightmode_class.darkBackground
+            cell.label.textColor = Nightmode_class.lightColor
+            tableView.separatorColor = Nightmode_class.darkSeparator
             images = [#imageLiteral(resourceName: "newspaper-white.png"),#imageLiteral(resourceName: "bookmark-outline-white.png"),#imageLiteral(resourceName: "settings-white.png"),#imageLiteral(resourceName: "outside-page-white.png"),#imageLiteral(resourceName: "info-white.png")]
         }
         else {
-            cell.backgroundColor = SettingsTableViewController().lightColor
-            cell.label.textColor = SettingsTableViewController().darkColor
+            cell.backgroundColor = Nightmode_class.lightColor
+            cell.label.textColor = Nightmode_class.darkColor
             images = [#imageLiteral(resourceName: "newspaper.png"),#imageLiteral(resourceName: "bookmark-outline.png"),#imageLiteral(resourceName: "settings.png"),#imageLiteral(resourceName: "outside-page.png"),#imageLiteral(resourceName: "info.png")]
-            tableView.separatorColor = UIColor.lightGray
+            tableView.separatorColor = Nightmode_class.lightSeparator
         }
             cell.picture.image = images[indexPath.row]
+        
             return cell
         }
     
@@ -107,7 +114,16 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
         }
         // Else, load new view by index
         else {
-            segue(index: indexPath.row)
+            
+            // Segue can only run once
+            if UserDefaults.standard.object(forKey: "didClickHeadline") as! Bool != true {
+                UserDefaults.standard.set(true, forKey: "didClickHeadline")
+                segue(index: indexPath.row)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    UserDefaults.standard.set(false, forKey: "didClickHeadline")
+                }
+            }
         }
     }
 }

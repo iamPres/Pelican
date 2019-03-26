@@ -18,12 +18,14 @@ class About: UIViewController {
     @IBOutlet weak var dateofpublication: UILabel!
     @IBOutlet weak var header: UIView!
     
+    let Nightmode_class = Nightmode()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setConstraints()
         
         // Nightmode settings
-        SettingsTableViewController().changeColor(target: self, labels: [author,authorname,dateofpublication,date,inquiries,email,pelican])
+        Nightmode_class.changeColor(target: self, labels: [author,authorname,dateofpublication,date,inquiries,email,pelican])
  
     }
     

@@ -20,11 +20,11 @@ class Bookmarks: UIViewController {
     @IBOutlet weak var header: UIView!
     
     let impact = UIImpactFeedbackGenerator(style: .heavy)
-    
+    let Nightmode_class = Nightmode()
+
     var index: Int = 0 // Index of bookmarked article to load in ArticleViewController
     var count: Int = 0 // Number of bookmarked articles
     var indexes: [Int] = [] // Storage indexes of bookmarked articles
-    
     var image: UIImage? = nil
     
     override func viewDidLoad() {
@@ -36,7 +36,7 @@ class Bookmarks: UIViewController {
         messageImage.image = #imageLiteral(resourceName: "output-onlinepngtools.png")
         
         // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [pelican, message]) {
+        if Nightmode_class.changeColor(target: self, labels: [pelican, message]) {
             image = #imageLiteral(resourceName: "bookmark-outline-white.png")
         }
         else {
@@ -113,12 +113,12 @@ extension Bookmarks: UITableViewDataSource, UITableViewDelegate {
         }
         
         // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [cell.titleLabel]) {
-            cell.backgroundColor = SettingsTableViewController().darkBackground
+        if Nightmode_class.changeColor(target: self, labels: [cell.titleLabel]) {
+            cell.backgroundColor = Nightmode_class.darkBackground
             tableView.separatorColor = UIColor.darkGray
         }
         else {
-            cell.backgroundColor = SettingsTableViewController().lightColor
+            cell.backgroundColor = Nightmode_class.lightColor
             tableView.separatorColor = UIColor.lightGray
         }
         return cell
@@ -133,8 +133,15 @@ extension Bookmarks: UITableViewDataSource, UITableViewDelegate {
         // set index to pass into ArticleViewController
         index = indexes[indexPath.row]
         
-        // prepare() and load view
-        self.performSegue(withIdentifier: "segue3", sender: nil)
+        // prepare() and load view (Segue can only run once)
+        if UserDefaults.standard.object(forKey: "didClickHeadline") as! Bool != true {
+            UserDefaults.standard.set(true, forKey: "didClickHeadline")
+            self.performSegue(withIdentifier: "segue3", sender: nil)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                UserDefaults.standard.set(false, forKey: "didClickHeadline")
+            }
+        }
     }
 }
 

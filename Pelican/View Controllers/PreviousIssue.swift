@@ -16,6 +16,9 @@ class PreviousIssue: UIViewController {
     @IBOutlet weak var pelican: UILabel!
     @IBOutlet weak var messageImage: UIImageView!
     @IBOutlet weak var header: UIView!
+    
+    let Nightmode_class = Nightmode()
+    
     var image: UIImage? = nil
     var count = 0
     
@@ -26,7 +29,7 @@ class PreviousIssue: UIViewController {
         setConstraints()
         
         // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [pelican, message]) {
+        if Nightmode_class.changeColor(target: self, labels: [pelican, message]) {
             image = #imageLiteral(resourceName: "newspaper-white.png")
         }
         else {
@@ -76,32 +79,22 @@ extension PreviousIssue: UITableViewDataSource, UITableViewDelegate {
         
         // Load cell attributes from bookmarked storage index
         tableView.rowHeight = 90
-        //cell.thumbnail.contentMode = .scaleAspectFit
-        //cell.thumbnail.image = UIImage(data: UserDefaults.standard.data(forKey: "image"+String(indexes[indexPath.row]))!)
-        //let attributes: [String] = UserDefaults.standard.array(forKey: "html"+String(indexes[indexPath.row])) as! [String]
-       // cell.titleLabel.text = attributes[0]
         
         // Nightmode settings
-        if SettingsTableViewController().changeColor(target: self, labels: [cell.titleLabel]) {
-            cell.backgroundColor = SettingsTableViewController().darkBackground
-            tableView.separatorColor = UIColor.darkGray
+        if Nightmode_class.changeColor(target: self, labels: [cell.titleLabel]) {
+            cell.backgroundColor = Nightmode_class.darkBackground
+            tableView.separatorColor = Nightmode_class.darkSeparator
         }
         else {
-            cell.backgroundColor = SettingsTableViewController().lightColor
-            tableView.separatorColor = UIColor.lightGray
+            cell.backgroundColor = Nightmode_class.lightColor
+            tableView.separatorColor = Nightmode_class.lightSeparator
         }
         return cell
     }
     
     // Handle row selection
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        NSLog("SELECTED: "+String(indexPath.row))
-        
-        // set index to pass into ArticleViewController
-        //index = indexes[indexPath.row]
-        
-        // prepare() and load view
-        //self.performSegue(withIdentifier: "segue3", sender: nil)
+  
     }
 }
 
