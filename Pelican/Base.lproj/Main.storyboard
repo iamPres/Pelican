@@ -45,7 +45,7 @@
                                         </constraints>
                                         <state key="normal" title="Button" image="menu-button-of-three-horizontal-lines.png"/>
                                         <connections>
-                                            <segue destination="rVR-bu-pyW" kind="custom" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="byR-r3-DvF"/>
+                                            <action selector="menuSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WTP-BM-9lh"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -162,8 +162,8 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="znZ-gI-LEx">
                                 <rect key="frame" x="150" y="226" width="75" height="75"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="fcH-3N-X2s"/>
-                                    <constraint firstAttribute="height" constant="75" id="own-kH-PzT"/>
+                                    <constraint firstAttribute="height" constant="75" id="a26-sg-2yE"/>
+                                    <constraint firstAttribute="width" constant="75" id="iwI-S2-gAi"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QL2-A7-qt6">
@@ -201,6 +201,7 @@
                         <outlet property="label" destination="CQ8-AB-Dw5" id="2BW-ac-pyh"/>
                         <outlet property="menuButton" destination="YtC-E9-P1G" id="zTA-gA-eUu"/>
                         <segue destination="J4k-CO-vZs" kind="custom" identifier="segue2" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="x2G-14-8Xj"/>
+                        <segue destination="rVR-bu-pyW" kind="custom" identifier="menu" customClass="ClickHeadline" customModule="Pelican" customModuleProvider="target" id="X11-Ut-TIz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -210,7 +211,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="592.79999999999995" y="166.8665667166417"/>
+            <point key="canvasLocation" x="590" y="167"/>
         </scene>
         <!--ArticleViewController-->
         <scene sceneID="9yn-iK-Urk">
@@ -252,7 +253,7 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPd-dT-H9Q">
                                                 <rect key="frame" x="16" y="64" width="343" height="0.0"/>
-                                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="15"/>
+                                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1051,9 +1052,9 @@
         <image name="menu-button-of-three-horizontal-lines.png" width="480" height="480"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="byR-r3-DvF"/>
+        <segue reference="X11-Ut-TIz"/>
         <segue reference="x2G-14-8Xj"/>
-        <segue reference="ReN-g5-UWb"/>
+        <segue reference="F6O-P7-ytK"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

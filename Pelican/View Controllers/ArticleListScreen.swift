@@ -35,13 +35,24 @@ class ArticleListScreen: UIViewController {
     
     var isReady: Bool = true
     
+    @IBAction func menuSender(_ sender: UIButton) {
+        if UserDefaults.standard.object(forKey: "didClickHeadline") as! Bool != true {
+            UserDefaults.standard.set(true, forKey: "didClickHeadline")
+            performSegue(withIdentifier: "menu", sender: nil)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                UserDefaults.standard.set(false, forKey: "didClickHeadline")
+            }
+        }
+    }
+    
     // URLS to scrape
-    let url: [URL] = [URL(string: "https://www.businessinsider.com/amazon-web-services-open-source-elasticsearch-2019-3")!,
-                      URL(string: "https://www.businessinsider.com/zero-electric-motorcycle-brings-connectivity-race-for-e-bikes-2019-3")!,
-                      URL(string: "https://www.businessinsider.com/lyft-ipo-public-s-1-filing-details-2019-2")!,
-                      URL(string: "https://www.businessinsider.com/most-powerful-countries-ranked-us-news-and-world-report-2019-2")!,
-                      URL(string: "https://www.businessinsider.com/highest-paying-job-in-every-us-state-2019-2")!,
-                      URL(string: "https://www.businessinsider.com/theresa-may-defeated-on-eu-brexit-deal-meaningful-vote-for-second-time-2019-3")!]
+    let url: [URL] = [URL(string: "http://pelicanonline.sps.edu/index.php/2019/02/21/classic-society-competition/")!,
+                      URL(string: "http://pelicanonline.sps.edu/index.php/2019/02/21/dancing-through-the-cold/")!,
+                      URL(string: "http://pelicanonline.sps.edu/index.php/2019/02/11/swim-meet/")!,
+                      URL(string: "http://pelicanonline.sps.edu/index.php/2019/02/11/the-carillonneurs-guild/")!,
+                      URL(string: "http://pelicanonline.sps.edu/index.php/2019/02/07/chinese-new-year/")!,
+                      URL(string: "http://pelicanonline.sps.edu/index.php/2019/02/07/joy/")!]
 
     
     override func viewDidLoad() {
@@ -143,7 +154,7 @@ class ArticleListScreen: UIViewController {
             tableView.separatorColor = Nightmode_class.lightSeparator
         }
         
-        cell.headlineTextLabel.text = UserDefaults.standard.array(forKey: "titles")![1] as? String
+        cell.headlineTextLabel.text = UserDefaults.standard.array(forKey: "titles")![0] as? String
         
         cell.headlineTextLabel.sizeToFit()
         tableView.rowHeight = cell.headlineTextLabel.frame.size.height + 28
@@ -249,11 +260,16 @@ extension ArticleListScreen: UITableViewDataSource, UITableViewDelegate {
     
     // while scrolling this delegate is being called so you may now check which direction your scrollView is being scrolled to
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         if (scrollView.contentOffset.y < -75 && self.lastContentOffset > scrollView.contentOffset.y && scrollView.scrollsToTop && scrollView.isDecelerating && self.isReady) {
+            if UserDefaults.standard.object(forKey: "didClickHeadline") as! Bool != true {
+                UserDefaults.standard.set(true, forKey: "didClickHeadline")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    UserDefaults.standard.set(false, forKey: "didClickHeadline")
+                }
                 notification.notificationOccurred(.error)
                 self.performSegue(withIdentifier: "load", sender: nil)
                 self.isReady = false
+            }
         }
     }
 }

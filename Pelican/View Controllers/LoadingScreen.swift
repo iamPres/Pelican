@@ -56,7 +56,7 @@ class LoadingScreen: UIViewController {
                 var attribute: String = ""
                 do{
                     let doc: Document = try SwiftSoup.parse(result)
-                    try attribute = doc.getElementsByClass("post-headline ").text()
+                    try attribute = doc.getElementsByClass("tagdiv-entry-title").text()
                     NSLog("Loaded attribute: "+String(i))
                 }catch{
                     NSLog("None")

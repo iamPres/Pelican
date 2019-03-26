@@ -157,7 +157,7 @@ class ArticleViewController: UIViewController {
             
             do{
                 let doc: Document = try SwiftSoup.parse(result)
-                try attribute = doc.getElementsByClass("post-headline ").text()
+                try attribute = doc.getElementsByClass("tagdiv-entry-title").text()
                 NSLog("NEW SHIT: "+attribute)
             }catch{
                 NSLog("None")
@@ -167,7 +167,7 @@ class ArticleViewController: UIViewController {
             
             do{
                 let doc: Document = try SwiftSoup.parse(result)
-                try attribute = doc.getElementsByClass("post-content typography ").text()
+                try attribute = doc.getElementsByClass("tagdiv-post-content").text()
                 NSLog("NEW SHIT: "+attribute)
             }catch{
                 NSLog("None")
@@ -181,7 +181,7 @@ class ArticleViewController: UIViewController {
             
             do{
                 let doc: Document = try SwiftSoup.parse(result)
-                try attribute = doc.getElementsByClass("byline-timestamp").text()
+                try attribute = doc.getElementsByClass("entry-date updated").text()
                 NSLog("NEW SHIT: "+attribute)
             }catch{
                 NSLog("None")
@@ -191,7 +191,7 @@ class ArticleViewController: UIViewController {
             
             do{
                 let doc: Document = try SwiftSoup.parse(result)
-                try attribute = doc.getElementsByClass("byline-link byline-author-name").text()
+                try attribute = doc.getElementsByClass("tagdiv-post-author-url fn").text()
                 NSLog("NEW SHIT: "+attribute)
             }catch{
                 NSLog("None")
@@ -204,6 +204,14 @@ class ArticleViewController: UIViewController {
     
     // Set constraints
     func format () {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        //line height size
+        paragraphStyle.lineSpacing = 5
+        let attrString = NSMutableAttributedString(string: article.text!)
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        article.attributedText = attrString
+        
         self.article.sizeToFit()
         self.headline.sizeToFit()
         
